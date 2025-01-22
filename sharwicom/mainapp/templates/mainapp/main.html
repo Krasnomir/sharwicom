@@ -1,1 +1,15 @@
-tetsfuhsaoifsao
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sharwicom</title>
+    <link rel="stylesheet" href="{% static 'mainapp/css/main.css' %}">
+</head>
+<body>
+    <div class="sharwicom-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

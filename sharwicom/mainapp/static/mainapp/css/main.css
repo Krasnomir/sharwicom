@@ -1,0 +1,69 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, .sharwicom-wrapper {
+  height: 100%;
+}
+
+.sharwicom-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ddc89c;
+}
+.sharwicom-wrapper .login-wrapper {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  gap: 2rem;
+}
+.sharwicom-wrapper .login-wrapper .banner {
+  width: 50%;
+  color: #503c29;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: right;
+}
+.sharwicom-wrapper .login-wrapper .fields {
+  display: flex;
+  flex-direction: column;
+  color: #503c29;
+}
+.sharwicom-wrapper .login-wrapper .fields button {
+  background-color: #d1ac73;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  transition: background 0.2s;
+  color: #503c29;
+  background-color: #503c29;
+  color: #ddc89c;
+  font-weight: 800;
+}
+.sharwicom-wrapper .login-wrapper .fields button:hover, .sharwicom-wrapper .login-wrapper .fields button:focus {
+  background-color: #ddc89c;
+  outline: solid 2px #d1ac73;
+}
+.sharwicom-wrapper .login-wrapper .fields button:hover {
+  outline: solid 2px #503c29;
+  background-color: #d1ac73;
+  color: #503c29;
+}
+.sharwicom-wrapper .login-wrapper .fields input {
+  background-color: #d1ac73;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  transition: background 0.2s;
+  color: #503c29;
+  margin-bottom: 1rem;
+}
+.sharwicom-wrapper .login-wrapper .fields input:hover, .sharwicom-wrapper .login-wrapper .fields input:focus {
+  background-color: #ddc89c;
+  outline: solid 2px #d1ac73;
+}
+
+/*# sourceMappingURL=main.css.map */

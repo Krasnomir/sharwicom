@@ -1,0 +1,82 @@
+$color0: #ffffff;
+$color1: #ddc89c;
+$color2: #d1ac73;
+$color3: #503c29;
+$color4: #3747a1;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, .sharwicom-wrapper {
+    height: 100%;
+}
+
+.sharwicom-wrapper {
+
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: $color1;
+
+.login-wrapper {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    gap: 2rem;
+
+    .banner {
+        width: 50%;
+        color: $color3;
+        font-size: 3rem;
+        font-weight: 800;
+        text-align: right;
+    }
+
+    .fields {
+        display: flex;
+        flex-direction: column;
+        color: $color3;
+
+        @mixin fieldInput {
+            background-color: $color2;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 2rem;
+            transition: background 0.2s;
+            color: $color3;
+
+            &:hover, &:focus {
+                background-color: $color1;
+                outline: solid 2px $color2;
+            }
+        }
+
+        @mixin button {
+            @include fieldInput();
+
+            background-color: $color3;
+            color: $color1;
+            font-weight: 800;
+
+            &:hover {
+                outline: solid 2px $color3;
+                background-color: $color2;
+                color: $color3
+            }
+        }
+
+        button {
+            @include button();
+        }
+
+        input {
+            @include fieldInput();
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+}
