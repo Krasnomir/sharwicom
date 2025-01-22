@@ -6,6 +6,7 @@
         sharwicom
     </div>
     <form class="fields" action="" method="post">
+        {% csrf_token %}
 
         <label for="username">username</label>
         <input id="username" name="username" type="text">
