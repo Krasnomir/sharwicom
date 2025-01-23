@@ -12,7 +12,23 @@ html, body, .sharwicom-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ddc89c;
+  background-color: #222222;
+  color: #ffffff;
+}
+.sharwicom-wrapper .home-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.sharwicom-wrapper .home-wrapper .header {
+  padding: 1rem;
+}
+.sharwicom-wrapper .home-wrapper .header .title {
+  font-size: 1.5rem;
+}
+.sharwicom-wrapper .home-wrapper .body {
+  padding: 1rem;
 }
 .sharwicom-wrapper .login-wrapper {
   display: flex;
@@ -20,9 +36,11 @@ html, body, .sharwicom-wrapper {
   width: 80%;
   gap: 2rem;
 }
+.sharwicom-wrapper .login-wrapper a {
+  color: #24a2d4;
+}
 .sharwicom-wrapper .login-wrapper .banner {
   width: 50%;
-  color: #503c29;
   font-size: 3rem;
   font-weight: 800;
   text-align: right;
@@ -30,43 +48,40 @@ html, body, .sharwicom-wrapper {
 .sharwicom-wrapper .login-wrapper .fields {
   display: flex;
   flex-direction: column;
-  color: #503c29;
   width: 50%;
 }
 .sharwicom-wrapper .login-wrapper .fields button {
-  background-color: #d1ac73;
+  background-color: #222222;
   border: none;
   padding: 0.5rem;
   border-radius: 2rem;
-  transition: background 0.2s;
-  color: #503c29;
+  transition: all 0.2s ease-in-out;
+  color: #ffffff;
   width: 10rem;
-  background-color: #503c29;
-  color: #ddc89c;
+  background-color: #ffffff;
+  color: #222222;
   font-weight: 800;
 }
 .sharwicom-wrapper .login-wrapper .fields button:hover, .sharwicom-wrapper .login-wrapper .fields button:focus {
-  background-color: #ddc89c;
-  outline: solid 2px #d1ac73;
+  outline: solid 2px #ffffff;
 }
 .sharwicom-wrapper .login-wrapper .fields button:hover {
-  outline: solid 2px #503c29;
-  background-color: #d1ac73;
-  color: #503c29;
+  outline: solid 2px #ffffff;
+  background-color: #222222;
+  color: #ffffff;
 }
 .sharwicom-wrapper .login-wrapper .fields input {
-  background-color: #d1ac73;
+  background-color: #222222;
   border: none;
   padding: 0.5rem;
   border-radius: 2rem;
-  transition: background 0.2s;
-  color: #503c29;
+  transition: all 0.2s ease-in-out;
+  color: #ffffff;
   width: 10rem;
   margin-bottom: 1rem;
 }
 .sharwicom-wrapper .login-wrapper .fields input:hover, .sharwicom-wrapper .login-wrapper .fields input:focus {
-  background-color: #ddc89c;
-  outline: solid 2px #d1ac73;
+  outline: solid 2px #ffffff;
 }
 .sharwicom-wrapper .login-wrapper .fields span {
   margin-top: 1rem;

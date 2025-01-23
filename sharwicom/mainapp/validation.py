@@ -1,6 +1,8 @@
 import re
 from django.contrib.auth.models import User
 
+# goes over and checks all the fields in the same order as they are passed as parameters
+# returns the error message or 0 if the data is correct
 def validateRegister(username, first_name, last_name, email, password):
 
     # check if username is already taken
@@ -13,13 +15,13 @@ def validateRegister(username, first_name, last_name, email, password):
         return "Username must be 3-20 characters long and contain only letters and numbers."
     
     # validate first name: 2-50 characters, letters only
-    firstName_pattern = r'^[a-zA-Z]{2,50}$'
-    if not re.match(firstName_pattern, first_name):
+    first_name_pattern = r'^[a-zA-Z]{2,50}$'
+    if not re.match(first_name_pattern, first_name):
         return "First name must be 2-50 characters long and contain only letters."
     
     # validate last name: 2-50 characters, letters only
-    lastName_pattern = r'^[a-zA-Z]{2,50}$'
-    if not re.match(lastName_pattern, last_name):
+    last_name_pattern = r'^[a-zA-Z]{2,50}$'
+    if not re.match(last_name_pattern, last_name):
         return "Last name must be 2-50 characters long and contain only letters."
     
     # validate email: proper format

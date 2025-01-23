@@ -1,8 +1,8 @@
-$color0: #ffffff;
-$color1: #ddc89c;
-$color2: #d1ac73;
-$color3: #503c29;
-$color4: #3747a1;
+$color0: #222222;
+$color1: #ffffff;
+$color2: #24a2d4;
+
+$animation-duration: 0.2s;
 
 * {
     margin: 0;
@@ -19,7 +19,27 @@ html, body, .sharwicom-wrapper {
 display: flex;
 justify-content: center;
 align-items: center;
-background-color: $color1;
+background-color: $color0;
+color: $color1;
+
+.home-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        padding: 1rem;
+
+        .title {
+            font-size: 1.5rem;
+        }
+    }
+
+    .body {
+        padding: 1rem;
+    }
+}
 
 .login-wrapper {
     display: flex;
@@ -27,9 +47,12 @@ background-color: $color1;
     width: 80%;
     gap: 2rem;
 
+    a {
+        color: $color2;
+    }
+
     .banner {
         width: 50%;
-        color: $color3;
         font-size: 3rem;
         font-weight: 800;
         text-align: right;
@@ -38,35 +61,33 @@ background-color: $color1;
     .fields {
         display: flex;
         flex-direction: column;
-        color: $color3;
         width: 50%;
 
         @mixin fieldInput {
-            background-color: $color2;
+            background-color: $color0;
             border: none;
             padding: 0.5rem;
             border-radius: 2rem;
-            transition: background 0.2s;
-            color: $color3;
+            transition: all $animation-duration ease-in-out;
+            color: $color1;
             width: 10rem;
 
             &:hover, &:focus {
-                background-color: $color1;
-                outline: solid 2px $color2;
+                outline: solid 2px $color1;
             }
         }
 
         @mixin button {
             @include fieldInput();
 
-            background-color: $color3;
-            color: $color1;
+            background-color: $color1;
+            color: $color0;
             font-weight: 800;
 
             &:hover {
-                outline: solid 2px $color3;
-                background-color: $color2;
-                color: $color3
+                outline: solid 2px $color1;
+                background-color: $color0;
+                color: $color1;
             }
         }
 

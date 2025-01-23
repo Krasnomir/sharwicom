@@ -5,20 +5,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from .validation import validateRegister
 
-# TODO: Register data validation
-
 def index(request):
-    template = loader.get_template('mainapp/main.html')
+    return redirect('home')
+
+def home(request):
+    template = loader.get_template('mainapp/home.html')
     context = {}
 
     return HttpResponse(template.render(context, request))
 
 def login(request):
-    if(request.method == "GET"):
-        template = loader.get_template('mainapp/login.html')
-        context = {}
+    template = loader.get_template('mainapp/login.html')
+    context = {}
 
-        return HttpResponse(template.render(context, request))
+    # redirects to the index page if the username and the password are correct and displays a message if they aren't
     if(request.method == "POST"):
         username = request.POST["username"]
         password = request.POST["password"]
@@ -27,47 +27,41 @@ def login(request):
         if user is not None:
             return redirect('index')
         else:
-            template = loader.get_template('mainapp/login.html')
             context = {'error_message': "Incorrect username or password"}
 
-            return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(context, request))
 
 def register(request):
-    if(request.method == "GET"):
-        template = loader.get_template('mainapp/register.html')
-        context = {}
+    template = loader.get_template('mainapp/register.html')
+    context = {}
 
-        return HttpResponse(template.render(context, request))
-    
     if(request.method == "POST"):
         username = request.POST["username"]
-        firstName = request.POST["first-name"]
-        lastName = request.POST["last-name"]
+        first_name = request.POST["first-name"]
+        last_name = request.POST["last-name"]
         email = request.POST["email"]
         password = request.POST["password"]
 
-        validationMessage = validateRegister(username, firstName, lastName, email, password)
+        # display what is wrong with the inputted data or add the new account to the database and redirect user to the index page
+        validationMessage = validateRegister(username, first_name, last_name, email, password)
         if(validationMessage) == 0:
-            user = User.objects.create_user(firstName, email, password)
-            user.last_name = lastName
+            user = User.objects.create_user(first_name, email, password)
+            user.last_name = last_name
             user.username = username
 
             user.save()
 
-            template = loader.get_template('mainapp/register.html')
-            context = {}
-
-            return HttpResponse(template.render(context, request))
+            return redirect('index')
         else:
-            template = loader.get_template('mainapp/register.html')
+            # this is just to save the inputted data so the user won't have to fill all the fields again
             context = {
                 'error_message': validationMessage,
                 'username': username,
-                'first_name': firstName,
-                'last_name': lastName,
+                'first_name': first_name,
+                'last_name': last_name,
                 'email': email,
                 'password': password,
             }
 
-            return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(context, request))
 
