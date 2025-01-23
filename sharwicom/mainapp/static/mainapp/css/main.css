@@ -31,6 +31,7 @@ html, body, .sharwicom-wrapper {
   display: flex;
   flex-direction: column;
   color: #503c29;
+  width: 50%;
 }
 .sharwicom-wrapper .login-wrapper .fields button {
   background-color: #d1ac73;
@@ -39,6 +40,7 @@ html, body, .sharwicom-wrapper {
   border-radius: 2rem;
   transition: background 0.2s;
   color: #503c29;
+  width: 10rem;
   background-color: #503c29;
   color: #ddc89c;
   font-weight: 800;
@@ -59,11 +61,16 @@ html, body, .sharwicom-wrapper {
   border-radius: 2rem;
   transition: background 0.2s;
   color: #503c29;
+  width: 10rem;
   margin-bottom: 1rem;
 }
 .sharwicom-wrapper .login-wrapper .fields input:hover, .sharwicom-wrapper .login-wrapper .fields input:focus {
   background-color: #ddc89c;
   outline: solid 2px #d1ac73;
+}
+.sharwicom-wrapper .login-wrapper .fields span {
+  margin-top: 1rem;
+  width: 60%;
 }
 
 /*# sourceMappingURL=main.css.map */

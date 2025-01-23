@@ -7,7 +7,7 @@
     </div>
     <form class="fields" action="" method="post">
         {% csrf_token %}
-
+        
         <label for="username">username</label>
         <input id="username" name="username" type="text">
 
@@ -15,6 +15,9 @@
         <input id="password" name="password" type="password">
 
         <button type="submit">log in</button>
+
+        <span>Don't have an account yet? <a href="{% url 'register' %}">Sign in here</a></span>
+        <span>{{ error_message }}</span>
     </form>
 </div>
 

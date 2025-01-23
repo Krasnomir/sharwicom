@@ -39,6 +39,7 @@ background-color: $color1;
         display: flex;
         flex-direction: column;
         color: $color3;
+        width: 50%;
 
         @mixin fieldInput {
             background-color: $color2;
@@ -47,6 +48,7 @@ background-color: $color1;
             border-radius: 2rem;
             transition: background 0.2s;
             color: $color3;
+            width: 10rem;
 
             &:hover, &:focus {
                 background-color: $color1;
@@ -75,6 +77,11 @@ background-color: $color1;
         input {
             @include fieldInput();
             margin-bottom: 1rem;
+        }
+
+        span {
+            margin-top: 1rem;
+            width: 60%;
         }
     }
 }
