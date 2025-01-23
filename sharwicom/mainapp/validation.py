@@ -34,4 +34,5 @@ def validateRegister(username, first_name, last_name, email, password):
     if not re.match(password_pattern, password):
         return "Password must be at least 8 characters long, have at least one special character and at least one number"
 
+    # passed validation
     return 0
