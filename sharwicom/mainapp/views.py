@@ -2,8 +2,10 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.models import User
+from .models import Conversation, Message
 from django.contrib.auth import authenticate
 from .validation import validateRegister
+from django.db.models import Q
 
 def index(request):
     return redirect('home')
@@ -11,6 +13,15 @@ def index(request):
 def home(request):
     template = loader.get_template('mainapp/home.html')
     context = {}
+
+    return HttpResponse(template.render(context, request))
+
+def conversations(request):
+    # gets all conversations where the requesting user is participating
+    user_conversations = Conversation.objects.filter(Q(person1=request.user) | Q(person2=request.user))
+
+    template = loader.get_template('mainapp/conversations.html')
+    context = {'convs':user_conversations}
 
     return HttpResponse(template.render(context, request))
 

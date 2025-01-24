@@ -1,0 +1,13 @@
+{% extends "mainapp/main.html" %}
+{% block content %}
+
+<div class="conversations-wrapper">
+    {% for conv in convs %}
+
+    {{ conv.person1 }}
+    {{ conv.person2 }}
+
+    {% endfor %}
+</div>
+
+{% endblock %}
