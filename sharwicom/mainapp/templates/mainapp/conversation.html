@@ -2,7 +2,21 @@
 {% block content %}
 
 <div class="conversations-wrapper">
-    
+    {% if success %}
+        {% for msg in messages %}
+
+            {% if msg.author == request.user %}
+                You:
+            {% else %}
+                {{ recipient_name }}:
+            {% endif %}
+
+            {{ msg.content }}
+            <br>
+        {% endfor %}
+    {% else %}
+        {{ message }}
+    {% endif %}
 </div>
 
 {% endblock %}

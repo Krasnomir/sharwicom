@@ -25,6 +25,27 @@ def conversations(request):
 
     return HttpResponse(template.render(context, request))
 
+# loads a conversation page with a user specified by their username
+def conversation(request, recipient_name):
+    template = loader.get_template('mainapp/conversation.html')
+
+    # the user with which we're conversating 
+    try: user = User.objects.get(username=recipient_name)
+    except: return HttpResponse(template.render({'success': False, 'message': "A user specified in the URL does not exist!"}, request))
+    
+    try: conversation = Conversation.objects.get((Q(person1=request.user) & Q(person2=user)) | (Q(person1=user) & Q(person2=request.user)))
+    except: return HttpResponse(template.render({'success': False, 'message': "Didn't find a conversation with that user!"}, request))
+
+    messages = Message.objects.filter(conversation=conversation)
+
+    context = {
+        'success': True,
+        'messages': messages,
+        'recipient_name': recipient_name 
+    }
+
+    return HttpResponse(template.render(context, request))
+
 def login(request):
     template = loader.get_template('mainapp/login.html')
     context = {}

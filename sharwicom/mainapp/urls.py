@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('home/', views.home, name='home'),
     path('conversations/', views.conversations, name='conversations'),
+    path('conversation/<str:recipient_name>', views.conversation, name='conversation'),
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
 ]
