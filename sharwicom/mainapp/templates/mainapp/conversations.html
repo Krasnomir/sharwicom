@@ -1,13 +1,18 @@
-{% extends "mainapp/main.html" %}
-{% block content %}
+{% extends "mainapp/home-base.html" %}
+{% block body %}
 
 <div class="conversations-wrapper">
+    <div class="available-conversations">
     {% for conv in convs %}
-
-    {{ conv.person1 }}
-    {{ conv.person2 }}
-
+        <div class="available-conversation">
+        {% if conv.person1 == request.user %}
+            <a href="{% url 'conversation' conv.person2.username %}">{{ conv.person2.username }}</a>
+        {% else %}
+            <a href="{% url 'conversation' conv.person1.username %}">{{ conv.person1.username }}</a>
+        {% endif %}
+        </div>
     {% endfor %}
+    </div>
 </div>
 
 {% endblock %}

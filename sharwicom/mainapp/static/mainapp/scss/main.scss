@@ -1,6 +1,7 @@
 $color0: #222222;
 $color1: #ffffff;
 $color2: #24a2d4;
+$color3: #444444;
 
 $animation-duration: 0.2s;
 
@@ -22,6 +23,39 @@ align-items: center;
 background-color: $color0;
 color: $color1;
 
+a {
+    color: $color2;
+}
+
+@mixin fieldInput {
+    background-color: $color0;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    transition: all $animation-duration ease-in-out;
+    color: $color1;
+    width: 10rem;
+    outline: solid 2px $color3;
+
+    &:hover, &:focus {
+        outline: solid 2px $color1;
+    }
+}
+
+@mixin button {
+    @include fieldInput();
+
+    background-color: $color1;
+    color: $color0;
+    font-weight: 800;
+
+    &:hover {
+        outline: solid 2px $color1;
+        background-color: $color0;
+        color: $color1;
+    }
+}
+
 .home-wrapper {
     width: 100%;
     height: 100%;
@@ -29,7 +63,12 @@ color: $color1;
     flex-direction: column;
 
     .header {
+        flex-shrink: 0;
         padding: 1rem;
+        position: sticky;
+        top: 0;
+        left: 0;
+        background-color: $color0;
 
         .title {
             font-size: 1.5rem;
@@ -37,7 +76,69 @@ color: $color1;
     }
 
     .body {
+        flex-grow: 1;
         padding: 1rem;
+        height: 100%;
+
+        .conversations-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+
+            @mixin conversation-panel {
+                border-radius: 2rem;
+                outline: solid 2px $color3;
+                padding: 1rem;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .available-conversations {
+                width: 30%;
+                @include conversation-panel();   
+            }
+
+            .active-conversation {
+                @include conversation-panel();
+
+                width: 40%;
+                display: flex;
+                flex-direction: column;
+
+                .conversation {
+                    flex-grow: 1;
+                }
+
+                .create {
+                    flex-shrink: 0;
+                    display: flex;
+                    gap: 1rem;
+
+                    input[type=text] {
+                        @include fieldInput();
+                        padding: 1rem;
+                        border-radius: 2rem;
+                        flex-grow: 1;
+                    }
+
+                    input[type=submit] {
+                        @include button();
+                        padding: 1rem;
+                        border-radius: 2rem;
+                        flex-shrink: 0;
+                        width: min-content;
+                    }
+                }
+
+                .you {
+                    text-align: end;
+                }
+            }
+        }
     }
 }
 
@@ -46,10 +147,6 @@ color: $color1;
     align-items: center;
     width: 80%;
     gap: 2rem;
-
-    a {
-        color: $color2;
-    }
 
     .banner {
         width: 50%;
@@ -62,34 +159,6 @@ color: $color1;
         display: flex;
         flex-direction: column;
         width: 50%;
-
-        @mixin fieldInput {
-            background-color: $color0;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 2rem;
-            transition: all $animation-duration ease-in-out;
-            color: $color1;
-            width: 10rem;
-
-            &:hover, &:focus {
-                outline: solid 2px $color1;
-            }
-        }
-
-        @mixin button {
-            @include fieldInput();
-
-            background-color: $color1;
-            color: $color0;
-            font-weight: 800;
-
-            &:hover {
-                outline: solid 2px $color1;
-                background-color: $color0;
-                color: $color1;
-            }
-        }
 
         button {
             @include button();
