@@ -4,7 +4,7 @@ from django.template import loader
 from django.contrib.auth.models import User
 from .models import Conversation, Message
 from django.contrib.auth import authenticate
-from .validation import validateRegister
+from .validation import validate_register, validate_message
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 
@@ -28,6 +28,22 @@ def conversations(request):
 
 # loads a conversation page with a user specified by their username
 def conversation(request, recipient_name):
+
+    # user sends a message
+    if request.method == "POST":
+        message_content = request.POST["message-content"]
+        
+        validation_message = validate_message(message_content)
+
+        # if validation was successfull, currently if it isn't it doesn't display the error anywhere
+        if validation_message == 0:
+            recipient = User.objects.get(username=recipient_name)
+            conversation_object = Conversation.objects.get((Q(person1=request.user) & Q(person2=recipient)) | (Q(person1=recipient) & Q(person2=request.user)))
+
+            new_message = Message.objects.create(content=message_content,author=request.user,conversation=conversation_object)
+            new_message.save()
+        
+
     template = loader.get_template('mainapp/conversation.html')
 
     # the user with which we're conversating 
@@ -88,7 +104,7 @@ def register(request):
         password = request.POST["password"]
 
         # display what is wrong with the inputted data or add the new account to the database and redirect user to the index page
-        validationMessage = validateRegister(username, first_name, last_name, email, password)
+        validationMessage = validate_register(username, first_name, last_name, email, password)
         if(validationMessage) == 0:
             user = User.objects.create_user(first_name, email, password)
             user.last_name = last_name

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # goes over and checks all the fields in the same order as they are passed as parameters
 # returns the error message or 0 if the data is correct
-def validateRegister(username, first_name, last_name, email, password):
+def validate_register(username, first_name, last_name, email, password):
 
     # check if username is already taken
     if User.objects.filter(username=username).exists():
@@ -34,5 +34,15 @@ def validateRegister(username, first_name, last_name, email, password):
     if not re.match(password_pattern, password):
         return "Password must be at least 8 characters long, have at least one special character and at least one number"
 
+    # passed validation
+    return 0
+
+# messages in conversations
+def validate_message(message):
+    
+    # allow messages that are from 1 to 500 characters long
+    if not (1 <= len(message) < 500):
+        return "Mesage can't be empty and can't be longer than 500 characters"
+    
     # passed validation
     return 0

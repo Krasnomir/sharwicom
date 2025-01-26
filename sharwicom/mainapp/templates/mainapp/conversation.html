@@ -5,10 +5,20 @@
     <div class="available-conversations">
     {% for conv in convs %}
         <div class="available-conversation">
+        <!-- List of all available conversations, it displays the usernames of the people with which the requesting user is conversating -->
+        <!-- Usernames link to the conversation page assosiated with that username (except the one that is currently opened) -->
         {% if conv.person1 == request.user %}
-            <a href="{% url 'conversation' conv.person2.username %}">{{ conv.person2.username }}</a>
+            {% if conv.person2.username == recipient_name %}
+                {{ conv.person2.username }}
+            {% else %}
+                <a href="{% url 'conversation' conv.person2.username %}">{{ conv.person2.username }}</a>
+            {% endif %}
         {% else %}
-            <a href="{% url 'conversation' conv.person1.username %}">{{ conv.person1.username }}</a>
+            {% if conv.person1.username == recipient_name %}
+                {{ conv.person1.username }}
+            {% else %}
+                <a href="{% url 'conversation' conv.person1.username %}">{{ conv.person1.username }}</a>
+            {% endif %}
         {% endif %}
         </div>
     {% endfor %}
@@ -19,19 +29,21 @@
                 {% for msg in messages %}
 
                     {% if msg.author == request.user %}
-                    <div class="you">You: {{ msg.content }}</div>
+                        <div class="you"><span>You: {{ msg.content }}</span></div>
                     {% else %}
-                        <div class="reciepent">{{ recipient_name }}: {{ msg.content }}</div>
+                        <div class="recipient"><span>{{ recipient_name }}: {{ msg.content }}</span></div>
                     {% endif %}
                 {% endfor %}
             {% else %}
                 {{ message }}
             {% endif %}
         </div>
-        <div class="create">
-            <input type="text">
+        <form class="create" method="post">
+            {% csrf_token %}
+
+            <input name="message-content" type="text">
             <input type="submit" value=">">
-        </div>
+        </form>
     </div>
 </div>
 

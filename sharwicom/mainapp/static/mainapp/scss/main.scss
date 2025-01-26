@@ -98,19 +98,31 @@ a {
             }
 
             .available-conversations {
-                width: 30%;
+                width: 20%;
                 @include conversation-panel();   
             }
 
             .active-conversation {
                 @include conversation-panel();
 
-                width: 40%;
+                width: 60%;
                 display: flex;
                 flex-direction: column;
 
                 .conversation {
                     flex-grow: 1;
+                    display: flex;
+                    flex-direction: column;                    
+                    
+                    span {
+                        width: 70%;
+                    }
+
+                    .you {
+                        text-align: end;
+                        display: flex;
+                        justify-content: end;
+                    }
                 }
 
                 .create {
@@ -132,10 +144,6 @@ a {
                         flex-shrink: 0;
                         width: min-content;
                     }
-                }
-
-                .you {
-                    text-align: end;
                 }
             }
         }
