@@ -1,6 +1,10 @@
 {% extends "mainapp/home-base.html" %}
+
+{% load static %}
+
 {% block body %}
 
+<script src="{% static 'mainapp/js/conversation-sync.js' %}"></script>
 <div class="conversations-wrapper">
     <div class="available-conversations">
     {% for conv in convs %}
@@ -29,9 +33,9 @@
                 {% for msg in messages %}
 
                     {% if msg.author == request.user %}
-                        <div class="you"><span>You: {{ msg.content }}</span></div>
+                        <div class="you"><span><b>({{ msg.date }}) You:</b> {{ msg.content }}</span></div>
                     {% else %}
-                        <div class="recipient"><span>{{ recipient_name }}: {{ msg.content }}</span></div>
+                        <div class="recipient"><span><b>({{ msg.date }}) {{ recipient_name }}:</b> {{ msg.content }}</span></div>
                     {% endif %}
                 {% endfor %}
             {% else %}

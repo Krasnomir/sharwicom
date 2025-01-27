@@ -56,6 +56,12 @@ a {
     }
 }
 
+@mixin panel {
+    border-radius: 2rem;
+    outline: solid 2px $color3;
+    padding: 1rem;
+}
+
 .home-wrapper {
     width: 100%;
     height: 100%;
@@ -89,9 +95,8 @@ a {
             gap: 1rem;
 
             @mixin conversation-panel {
-                border-radius: 2rem;
-                outline: solid 2px $color3;
-                padding: 1rem;
+                @include panel();
+
                 height: 100%;
                 display: flex;
                 flex-direction: column;
@@ -99,7 +104,13 @@ a {
 
             .available-conversations {
                 width: 20%;
-                @include conversation-panel();   
+                @include conversation-panel();
+                gap: 1rem;
+
+                .available-conversation {
+                    @include panel();
+                    text-align: center;
+                }
             }
 
             .active-conversation {
@@ -113,6 +124,7 @@ a {
                     flex-grow: 1;
                     display: flex;
                     flex-direction: column;                    
+                    gap: 1rem;
                     
                     span {
                         width: 70%;

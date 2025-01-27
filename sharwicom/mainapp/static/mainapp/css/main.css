@@ -56,6 +56,13 @@ html, body, .sharwicom-wrapper {
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .available-conversations .available-conversation {
+  border-radius: 2rem;
+  outline: solid 2px #444444;
+  padding: 1rem;
+  text-align: center;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation {
   border-radius: 2rem;
@@ -72,6 +79,7 @@ html, body, .sharwicom-wrapper {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation span {
   width: 70%;
