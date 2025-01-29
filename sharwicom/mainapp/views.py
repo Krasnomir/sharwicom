@@ -1,5 +1,6 @@
+import json
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth.models import User
 from .models import Conversation, Message
@@ -126,3 +127,16 @@ def register(request):
 
     return HttpResponse(template.render(context, request))
 
+def sync_conversation(request):
+    if request.method == 'GET':
+        user_username = request.GET.get('user1', '')
+        reciepent_username = request.GET.get('user2', '')
+
+        reciepent = User.objects.get(username=reciepent_username)
+
+        if request.user.username == user_username:
+            conversation = Conversation.objects.get((Q(person1=request.user) & Q(person2=reciepent)) | (Q(person1=reciepent) & Q(person2=request.user)))
+
+            messages = Message.objects.filter(conversation=conversation).values('content', 'author__username', 'date')
+
+            return JsonResponse({'success': 'true', 'messages': list(messages)})

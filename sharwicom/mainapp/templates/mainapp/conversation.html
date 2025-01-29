@@ -28,7 +28,7 @@
     {% endfor %}
     </div>
     <div class="active-conversation">
-        <div class="conversation">
+        <div class="conversation" data-user="{{ request.user.username }}" data-reciepent="{{ recipient_name }}">
             {% if success %}
                 {% for msg in messages %}
 
