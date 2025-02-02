@@ -26,11 +26,11 @@ function syncMessages() {
     // without those checks they could easily access any existing conversations by changing the data attributes
     const conversation = document.querySelector('.conversation');
     const user = conversation.dataset.user;
-    const reciepent = conversation.dataset.recipient;
+    const recipient = conversation.dataset.recipient;
 
     // sending xml http request with info about conversation which is requested to be synchronized (it sends usernames of people in the conversation)
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `../conversations/sync?user1=${user}&user2=${reciepent}`, true);
+    xhr.open('GET', `../conversations/sync?user1=${user}&user2=${recipient}`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('X-CSRFToken', csrftoken);
     xhr.send();
@@ -56,8 +56,8 @@ function syncMessages() {
                 const content = messages[i].content;
                 
                 const messageAuthor = (user === author) ? 'You' : author;
-                const messageClass = (user === author) ? "you" : "reciepent";
-                messagesHTML += '<div class="'+messageClass+'"><span><b>'+messageAuthor+':</b> '+content+'</span></div>';
+                const messageClass = (user === author) ? "you" : "recipient";
+                messagesHTML += '<div class="'+messageClass+'"><div class="message"><b>'+messageAuthor+':</b> '+content+'</div></div>';
             }
         }
 
@@ -99,5 +99,5 @@ onload = () => {
     const sendBtn = document.querySelector('.sharwicom-wrapper .send-message');
     sendBtn.addEventListener('click', sendMessage);
 
-    setInterval(syncMessages, 1000); // updates the messages every x milliseconds 
+    //setInterval(syncMessages, 1000); // updates the messages every x milliseconds 
 }

@@ -1,181 +1,145 @@
 $color0: #222222;
-$color1: #ffffff;
-$color2: #24a2d4;
-$color3: #444444;
+$color1: #444444;
+$color2: #ffffff;
+$color3: #6593e9;
 
-$animation-duration: 0.2s;
-
-* {
+html, body {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body, .sharwicom-wrapper {
     height: 100%;
 }
 
-.sharwicom-wrapper {
-
-display: flex;
-justify-content: center;
-align-items: center;
-background-color: $color0;
-color: $color1;
-
-a {
-    color: $color2;
-}
-
-@mixin fieldInput {
+@mixin input {
+    padding: 1rem;
     background-color: $color0;
+    outline: $color1 solid 2px !important;
+    border-radius: 1rem;
     border: none;
-    padding: 0.5rem;
-    border-radius: 2rem;
-    transition: all $animation-duration ease-in-out;
-    color: $color1;
-    width: 10rem;
-    outline: solid 2px $color3;
+    color: $color2;
+    transition: all 0.2s ease-in-out;
 
-    &:hover, &:focus {
-        outline: solid 2px $color1;
+    &:hover {
+        outline: $color2 solid 2px !important;
+    }
+
+    &:hover {
+        outline: $color2 solid 2px !important;
     }
 }
 
 @mixin button {
-    @include fieldInput();
-
-    background-color: $color1;
-    color: $color0;
-    font-weight: 800;
-
-    &:hover {
-        outline: solid 2px $color1;
-        background-color: $color0;
-        color: $color1;
-    }
-}
-
-@mixin panel {
-    border-radius: 2rem;
-    outline: solid 2px $color3;
     padding: 1rem;
+    background-color: $color1;
+    border-radius: 1rem;
+    border: none;
+    color: white;
+    font-weight: 900;
+    transition: all 0.2s ease-in-out;
+    outline: $color1 solid 2px !important;
+    
+    &:hover {
+        outline: $color2 solid 2px !important;
+    }
 }
 
-.home-wrapper {
-    width: 100%;
+.sharwicom-wrapper {
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    overflow: hidden;
+    background-color: $color0;
+    color: $color2;
 
-    .header {
-        flex-shrink: 0;
-        padding: 1rem;
-        position: sticky;
-        top: 0;
-        left: 0;
-        background-color: $color0;
-
-        .title {
-            font-size: 1.5rem;
-        }
+    a {
+        color: $color3;
     }
 
-    .body {
-        flex-grow: 1;
-        padding: 1rem;
+    .home-wrapper {
         height: 100%;
-        max-height: 100%;
-
-        .conversations-wrapper {
-            height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            
-            .available-conversations {
-                @include panel;
-
-                width: 20%;
-                height: 80%;
-            }
-
-            .active-conversation {
-                width: 60%;
-                height: 80%;
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-            
-                .conversation {
-                    @include panel;
-                    display: flex;
-                    flex-direction: column;
-                    flex-grow: 1;  // Ensures it takes available space
-                    overflow-y: auto;  // Enables scrolling if needed
-                    min-height: 0; // Prevents flexbox from stretching it indefinitely
-            
-                    > * {
-                        margin-bottom: 1rem;
-                        flex-shrink: 0;  // Prevents children from shrinking
-                    }
-                }
-            
-                .create {
-                    display: flex;
-                    flex-direction: row;
-                    flex-shrink: 0;
-                    gap: 1rem;
-            
-                    .message {
-                        @include fieldInput();
-                        flex-grow: 1;
-                    }
-            
-                    .send-message {
-                        @include button();
-                        flex-shrink: 0;
-                    }
-                }
-            }                        
-        }
-    }
-}
-
-.login-wrapper {
-    display: flex;
-    align-items: center;
-    width: 80%;
-    gap: 2rem;
-
-    .banner {
-        width: 50%;
-        font-size: 3rem;
-        font-weight: 800;
-        text-align: right;
-    }
-
-    .fields {
+        overflow: hidden;
         display: flex;
         flex-direction: column;
-        width: 50%;
 
-        button {
-            @include button();
+        .header {
+            flex-shrink: 0;
+            color: $color2;
+            padding: 1rem;
+            font-size: 1.5rem;
         }
 
-        input {
-            @include fieldInput();
-            margin-bottom: 1rem;
-        }
+        .body {
+            flex-grow: 1;
+            overflow: hidden;
 
-        span {
-            margin-top: 1rem;
-            width: 60%;
+            .conversations-wrapper {
+                height: 100%;
+                overflow: hidden;
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+                justify-content: center;
+                align-items: center;
+
+                .available-conversations, .active-conversation {
+                    outline: solid $color1 2px;
+                    border-radius: 1rem;
+                    padding: 1rem;
+                    height: 60%;
+                }
+                
+                .available-conversations {
+                    width: 20%;
+                }
+
+                .active-conversation {
+                    display: flex;
+                    flex-direction: column;
+                    width: 60%;
+
+                    .conversation {
+                        flex-grow: 1;
+                        overflow: scroll;
+                        display: flex;
+                        flex-direction: column;
+                        min-height: 0;
+                        max-height: 100%;
+                        gap: 1rem;
+
+                        .you, .recipient {
+                            width: 60%;
+                            
+                            .message {
+                                width: fit-content;
+                                background-color: $color1;
+                                padding: 1rem;
+                                border-radius: 1rem;
+                            }
+                        }
+
+                        .you {
+                            margin-left: auto;
+
+                            .message {
+                                margin-left: auto;
+                            }
+                        }
+                    }
+
+                    .create {
+                        flex-shrink: 0;
+                        display: flex;
+                        gap: 1rem;
+                        padding-top: 1rem;
+
+                        .message {
+                            flex-grow: 1;
+                            @include input();
+                        }
+
+                        .send-message {
+                            @include button();
+                            flex-shrink: 0;
+                        }
+                    }
+                }
+            }
         }
     }
-}
-
 }
