@@ -28,7 +28,7 @@
     {% endfor %}
     </div>
     <div class="active-conversation">
-        <div class="conversation" data-user="{{ request.user.username }}" data-reciepent="{{ recipient_name }}">
+        <div class="conversation" data-user="{{ request.user.username }}" data-recipient="{{ recipient_name }}">
             {% if success %}
                 {% for msg in messages %}
 
@@ -42,12 +42,12 @@
                 {{ message }}
             {% endif %}
         </div>
-        <form class="create" method="post">
+        <div class="create" method="post">
             {% csrf_token %}
 
-            <input name="message-content" type="text">
-            <input type="submit" value=">">
-        </form>
+            <input class="message" name="message-content" type="text">
+            <button type="submit" class="send-message">></button>
+        </div>
     </div>
 </div>
 

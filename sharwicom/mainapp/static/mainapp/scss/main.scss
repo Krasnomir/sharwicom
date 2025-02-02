@@ -85,79 +85,61 @@ a {
         flex-grow: 1;
         padding: 1rem;
         height: 100%;
+        max-height: 100%;
 
         .conversations-wrapper {
-            width: 100%;
             height: 100%;
+            width: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             gap: 1rem;
-
-            @mixin conversation-panel {
-                @include panel();
-
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-            }
-
+            
             .available-conversations {
-                width: 20%;
-                @include conversation-panel();
-                gap: 1rem;
+                @include panel;
 
-                .available-conversation {
-                    @include panel();
-                    text-align: center;
-                }
+                width: 20%;
+                height: 80%;
             }
 
             .active-conversation {
-                @include conversation-panel();
-
                 width: 60%;
+                height: 80%;
                 display: flex;
                 flex-direction: column;
-
+                gap: 1rem;
+            
                 .conversation {
-                    flex-grow: 1;
+                    @include panel;
                     display: flex;
-                    flex-direction: column;                    
-                    gap: 1rem;
-                    
-                    span {
-                        width: 70%;
-                    }
-
-                    .you {
-                        text-align: end;
-                        display: flex;
-                        justify-content: end;
+                    flex-direction: column;
+                    flex-grow: 1;  // Ensures it takes available space
+                    overflow-y: auto;  // Enables scrolling if needed
+                    min-height: 0; // Prevents flexbox from stretching it indefinitely
+            
+                    > * {
+                        margin-bottom: 1rem;
+                        flex-shrink: 0;  // Prevents children from shrinking
                     }
                 }
-
+            
                 .create {
-                    flex-shrink: 0;
                     display: flex;
+                    flex-direction: row;
+                    flex-shrink: 0;
                     gap: 1rem;
-
-                    input[type=text] {
+            
+                    .message {
                         @include fieldInput();
-                        padding: 1rem;
-                        border-radius: 2rem;
                         flex-grow: 1;
                     }
-
-                    input[type=submit] {
+            
+                    .send-message {
                         @include button();
-                        padding: 1rem;
-                        border-radius: 2rem;
                         flex-shrink: 0;
-                        width: min-content;
                     }
                 }
-            }
+            }                        
         }
     }
 }

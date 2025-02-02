@@ -18,7 +18,7 @@ function getCookie(name) {
 }
 
 // dynamically load messages from the server wihtout refreshing the whole page
-function updateConversation() {
+function syncMessages() {
     const csrftoken = getCookie('csrftoken');
 
     // retrieve usernames of people in the conversation from conversation div's data attributes 
@@ -26,7 +26,7 @@ function updateConversation() {
     // without those checks they could easily access any existing conversations by changing the data attributes
     const conversation = document.querySelector('.conversation');
     const user = conversation.dataset.user;
-    const reciepent = conversation.dataset.reciepent;
+    const reciepent = conversation.dataset.recipient;
 
     // sending xml http request with info about conversation which is requested to be synchronized (it sends usernames of people in the conversation)
     const xhr = new XMLHttpRequest();
@@ -65,7 +65,39 @@ function updateConversation() {
     }
 }
 
-window.onload = () => {
-    updateConversation();
-    setInterval(updateConversation, 1000);
+function sendMessage() {
+    const csrftoken = getCookie('csrftoken');
+
+    const conversation = document.querySelector('.conversation');
+    const user = conversation.dataset.user;
+    const recipient = conversation.dataset.recipient;
+    const message_content = window.document.querySelector('.sharwicom-wrapper .create .message').value;
+
+    // sending xml http request with info about conversation which is requested to be synchronized (it sends usernames of people in the conversation)
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `../conversations/send?sender=${user}&message=${message_content}`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+    const data = JSON.stringify({
+        sender: user,
+        recipient: recipient,
+        message_content: message_content
+    });
+    xhr.send(data);
+
+    xhr.onload = () => {
+        syncMessages();
+    }
+}
+
+onload = () => {
+    syncMessages();
+
+    // so previously i used forms to create POST requests regarding the message creation 
+    // but i didnt want it to refresh the entire page every time a user sends a message
+    // now its implemented using ajax, just like the message syncing
+    const sendBtn = document.querySelector('.sharwicom-wrapper .send-message');
+    sendBtn.addEventListener('click', sendMessage);
+
+    setInterval(syncMessages, 1000); // updates the messages every x milliseconds 
 }

@@ -130,13 +130,36 @@ def register(request):
 def sync_conversation(request):
     if request.method == 'GET':
         user_username = request.GET.get('user1', '')
-        reciepent_username = request.GET.get('user2', '')
+        recipient_username = request.GET.get('user2', '')
 
-        reciepent = User.objects.get(username=reciepent_username)
+        recipient = User.objects.get(username=recipient_username)
 
         if request.user.username == user_username:
-            conversation = Conversation.objects.get((Q(person1=request.user) & Q(person2=reciepent)) | (Q(person1=reciepent) & Q(person2=request.user)))
+            conversation = Conversation.objects.get((Q(person1=request.user) & Q(person2=recipient)) | (Q(person1=recipient) & Q(person2=request.user)))
 
             messages = Message.objects.filter(conversation=conversation).values('content', 'author__username', 'date')
 
             return JsonResponse({'success': 'true', 'messages': list(messages)})
+
+def send_conversation(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        sender_username = data.get('sender')
+        recipient_username = data.get('recipient')
+        message_content = data.get('message_content')
+
+        if sender_username == request.user.username:
+            validation_message = validate_message(message_content)
+
+            # if validation was successfull, currently if it isn't it doesn't display the error anywhere
+            if validation_message == 0:
+                recipient = User.objects.get(username=recipient_username)
+                conversation_object = Conversation.objects.get((Q(person1=request.user) & Q(person2=recipient)) | (Q(person1=recipient) & Q(person2=request.user)))
+
+                new_message = Message.objects.create(content=message_content,author=request.user,conversation=conversation_object)
+                new_message.save()
+
+            return HttpResponse("")    
+
+        return HttpResponse("")
