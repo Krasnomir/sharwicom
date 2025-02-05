@@ -4,7 +4,8 @@
 
 {% block body %}
 
-<script src="{% static 'mainapp/js/conversation-sync.js' %}"></script>
+<script src="{% static 'mainapp/js/conversation-ajax.js' %}"></script>
+<script defer src="{% static 'mainapp/js/auto-scroll-conversation.js' %}"></script>
 <div class="conversations-wrapper">
     <div class="available-conversations">
     {% for conv in convs %}

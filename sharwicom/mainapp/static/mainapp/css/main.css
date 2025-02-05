@@ -12,6 +12,60 @@ html, body {
 .sharwicom-wrapper a {
   color: #6593e9;
 }
+.sharwicom-wrapper .login-wrapper {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sharwicom-wrapper .login-wrapper .banner {
+  width: 30%;
+  text-align: end;
+  font-size: 3rem;
+  font-weight: 900;
+  padding: 1rem;
+}
+.sharwicom-wrapper .login-wrapper .fields {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 30%;
+}
+.sharwicom-wrapper .login-wrapper .fields input {
+  padding: 1rem;
+  background-color: #222222;
+  outline: #444444 solid 2px !important;
+  border-radius: 1rem;
+  border: none;
+  color: #ffffff;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5rem;
+  width: 8rem;
+  margin-bottom: 1rem;
+}
+.sharwicom-wrapper .login-wrapper .fields input:hover {
+  outline: #ffffff solid 2px !important;
+}
+.sharwicom-wrapper .login-wrapper .fields input:hover {
+  outline: #ffffff solid 2px !important;
+}
+.sharwicom-wrapper .login-wrapper .fields button {
+  padding: 1rem;
+  background-color: #444444;
+  border-radius: 1rem;
+  border: none;
+  color: white;
+  font-weight: 900;
+  transition: all 0.2s ease-in-out;
+  outline: #444444 solid 2px !important;
+  padding: 0.5rem;
+  width: 8rem;
+  margin-bottom: 1rem;
+}
+.sharwicom-wrapper .login-wrapper .fields button:hover {
+  outline: #ffffff solid 2px !important;
+}
 .sharwicom-wrapper .home-wrapper {
   height: 100%;
   overflow: hidden;
@@ -23,6 +77,11 @@ html, body {
   color: #ffffff;
   padding: 1rem;
   font-size: 1.5rem;
+  font-weight: 900;
+}
+.sharwicom-wrapper .home-wrapper .header a {
+  color: #ffffff;
+  text-decoration: none;
 }
 .sharwicom-wrapper .home-wrapper .body {
   flex-grow: 1;
@@ -51,9 +110,21 @@ html, body {
   flex-direction: column;
   width: 60%;
 }
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation::-webkit-scrollbar {
+  width: 3px;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation::-webkit-scrollbar-thumb {
+  background: #444444;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation {
   flex-grow: 1;
-  overflow: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   min-height: 0;

@@ -71,7 +71,11 @@ function sendMessage() {
     const conversation = document.querySelector('.conversation');
     const user = conversation.dataset.user;
     const recipient = conversation.dataset.recipient;
-    const message_content = window.document.querySelector('.sharwicom-wrapper .create .message').value;
+    const message_container = window.document.querySelector('.sharwicom-wrapper .create .message');
+    const message_content = message_container.value;
+    
+    // clear the message input field
+    message_container.value = "";
 
     // sending xml http request with info about conversation which is requested to be synchronized (it sends usernames of people in the conversation)
     const xhr = new XMLHttpRequest();
@@ -87,6 +91,8 @@ function sendMessage() {
 
     xhr.onload = () => {
         syncMessages();
+
+        setTimeout(scrollConversation, 100); // can't be called immediately beacuse syncMessages function takes some time to add new messages to the user page 
     }
 }
 
@@ -99,5 +105,5 @@ onload = () => {
     const sendBtn = document.querySelector('.sharwicom-wrapper .send-message');
     sendBtn.addEventListener('click', sendMessage);
 
-    //setInterval(syncMessages, 1000); // updates the messages every x milliseconds 
+    setInterval(syncMessages, 1000); // updates the messages every x milliseconds 
 }
