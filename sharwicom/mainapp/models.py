@@ -10,3 +10,11 @@ class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+
+class Content(models.Model):
+    title = models.TextField()
+    ratings = models.JSONField(default=dict)
+
+class Rating(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    stars = models.SmallIntegerField() # integers ranging from 1 to 5

@@ -163,3 +163,7 @@ def send_conversation(request):
             return HttpResponse("")    
 
         return HttpResponse("")
+
+def content(request):
+    template = loader.get_template('mainapp/content.html')
+    return HttpResponse(template.render({}, request))

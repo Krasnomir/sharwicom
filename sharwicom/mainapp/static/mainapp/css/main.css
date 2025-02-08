@@ -182,5 +182,16 @@ html, body {
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .create .send-message:hover {
   outline: #ffffff solid 2px !important;
 }
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .rating {
+  display: flex;
+  font-size: 2rem;
+  color: #444444;
+}
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .rating div {
+  cursor: grab;
+}
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .rating .checked {
+  color: #eeba2a;
+}
 
 /*# sourceMappingURL=main.css.map */

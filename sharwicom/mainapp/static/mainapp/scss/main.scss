@@ -2,6 +2,7 @@ $color0: #222222;
 $color1: #444444;
 $color2: #ffffff;
 $color3: #6593e9;
+$starColor: #eeba2a;
 
 html, body {
     margin: 0;
@@ -197,6 +198,22 @@ html, body {
                             @include button();
                             flex-shrink: 0;
                         }
+                    }
+                }
+            }
+
+            .content-wrapper {
+                .rating {
+                    display: flex;
+                    font-size: 2rem;
+                    color: $color1;
+                    
+                    div {
+                        cursor: grab;
+                    }
+
+                    .checked {
+                        color: $starColor;
                     }
                 }
             }
