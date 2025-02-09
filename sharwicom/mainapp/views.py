@@ -165,9 +165,9 @@ def send_conversation(request):
         return HttpResponse("")
 
 def content(request, content_url_name):
-    print(content_url_name);
     template = loader.get_template('mainapp/content.html')
     return HttpResponse(template.render({}, request))
 
 def create_content(request):
-    return HttpResponse("")
+    template = loader.get_template('mainapp/create-content.html')
+    return HttpResponse(template.render({}, request))

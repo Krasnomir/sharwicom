@@ -15,11 +15,13 @@ function checkStars(ratingPanel, starsToCheck) {
 }
 
 for(const ratingPanel of ratingPanels) {
+    checkStars(ratingPanel, ratingPanel.dataset.rating); // automatically check the stars specified in the data attribute so it doesnt have to be added manually
+
+    // hover effect for star ratings
     if(ratingPanel.classList[1] == 'interactable') {
         for(const star of ratingPanel.children) {
-        
             star.addEventListener('mouseover', (event) => {
-               checkStars(ratingPanel, star.className[1]); 
+               checkStars(ratingPanel, star.className[1]);
             });
     
             star.addEventListener('mouseout', (event) => {
