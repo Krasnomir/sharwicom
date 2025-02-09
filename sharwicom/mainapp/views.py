@@ -160,10 +160,14 @@ def send_conversation(request):
                 new_message = Message.objects.create(content=message_content,author=request.user,conversation=conversation_object)
                 new_message.save()
 
-            return HttpResponse("")    
+            return HttpResponse("")
 
         return HttpResponse("")
 
-def content(request):
+def content(request, content_url_name):
+    print(content_url_name);
     template = loader.get_template('mainapp/content.html')
     return HttpResponse(template.render({}, request))
+
+def create_content(request):
+    return HttpResponse("")

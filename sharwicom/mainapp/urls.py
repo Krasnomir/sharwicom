@@ -11,7 +11,8 @@ urlpatterns = [
     path('conversations/send', views.send_conversation, name='send_conversation'),
     path('conversation/<str:recipient_name>', views.conversation, name='conversation'),
 
-    path('content/', views.content, name='content'),
+    path('content/<str:content_url_name>', views.content, name='content'),
+    path('create-content/', views.create_content, name='create_content'),
 
     path('login/', views.custom_login, name='custom_login'),
     path('register/', views.register, name='register')

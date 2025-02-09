@@ -12,7 +12,8 @@ class Message(models.Model):
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
 
 class Content(models.Model):
-    title = models.TextField()
+    url_name = models.CharField(max_length=50) # title in lowercase without spaces
+    title = models.CharField(max_length=50)
     ratings = models.JSONField(default=dict)
 
 class Rating(models.Model):

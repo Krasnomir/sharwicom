@@ -15,14 +15,16 @@ function checkStars(ratingPanel, starsToCheck) {
 }
 
 for(const ratingPanel of ratingPanels) {
-    for(const star of ratingPanel.children) {
+    if(ratingPanel.classList[1] == 'interactable') {
+        for(const star of ratingPanel.children) {
         
-        star.addEventListener('mouseover', (event) => {
-           checkStars(ratingPanel, star.className[1]); 
-        });
-
-        star.addEventListener('mouseout', (event) => {
-            checkStars(ratingPanel, ratingPanel.dataset.rating);
-        });
+            star.addEventListener('mouseover', (event) => {
+               checkStars(ratingPanel, star.className[1]); 
+            });
+    
+            star.addEventListener('mouseout', (event) => {
+                checkStars(ratingPanel, ratingPanel.dataset.rating);
+            });
+        }
     }
 }
