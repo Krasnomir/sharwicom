@@ -6,6 +6,7 @@
 
 <script src="{% static 'mainapp/js/conversation-ajax.js' %}"></script>
 <script defer src="{% static 'mainapp/js/auto-scroll-conversation.js' %}"></script>
+{% if success %}
 <div class="conversations-wrapper">
     <div class="available-conversations">
     {% for conv in convs %}
@@ -30,18 +31,14 @@
     </div>
     <div class="active-conversation">
         <div class="conversation" data-user="{{ request.user.username }}" data-recipient="{{ recipient_name }}">
-            {% if success %}
-                {% for msg in messages %}
+            {% for msg in messages %}
 
-                    {% if msg.author == request.user %}
-                        <div class="you"><div class="message"><b>({{ msg.date }}) You:</b> {{ msg.content }}</div></div>
-                    {% else %}
-                        <div class="recipient"><div class="message"><b>({{ msg.date }}) {{ recipient_name }}:</b> {{ msg.content }}</div></div>
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                {{ message }}
-            {% endif %}
+                {% if msg.author == request.user %}
+                    <div class="you"><div class="message"><b>({{ msg.date }}) You:</b> {{ msg.content }}</div></div>
+                {% else %}
+                    <div class="recipient"><div class="message"><b>({{ msg.date }}) {{ recipient_name }}:</b> {{ msg.content }}</div></div>
+                {% endif %}
+            {% endfor %}
         </div>
         <div class="create" method="post">
             {% csrf_token %}
@@ -51,5 +48,8 @@
         </div>
     </div>
 </div>
+{% else %}
+{{ message }}
+{% endif %}
 
 {% endblock %}

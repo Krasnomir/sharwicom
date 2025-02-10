@@ -12,7 +12,7 @@ urlpatterns = [
     path('conversation/<str:recipient_name>', views.conversation, name='conversation'),
 
     path('content/<str:content_url_name>', views.content, name='content'),
-    path('create-content/', views.create_content, name='create_content'),
+    path('add-content/', views.add_content, name='add_content'),
 
     path('login/', views.custom_login, name='custom_login'),
     path('register/', views.register, name='register')

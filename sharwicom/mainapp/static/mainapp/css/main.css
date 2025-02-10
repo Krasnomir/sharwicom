@@ -103,6 +103,7 @@ html, body {
   height: 100%;
   flex-grow: 1;
   overflow: hidden;
+  padding: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper {
   height: 100%;
@@ -114,7 +115,7 @@ html, body {
   align-items: center;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .available-conversations, .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation {
-  outline: solid #444444 2px;
+  border: solid #444444 2px;
   border-radius: 1rem;
   padding: 1rem;
   height: 60%;
@@ -201,7 +202,6 @@ html, body {
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper {
   height: 100%;
-  padding: 1rem;
   overflow: hidden;
   display: flex;
   gap: 1rem;
@@ -213,20 +213,28 @@ html, body {
   gap: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .details {
-  outline: solid #444444 2px;
+  border: solid #444444 2px;
   border-radius: 1rem;
   padding: 1rem;
   flex-grow: 5;
   overflow-y: auto;
-  font-size: 6rem;
   height: max-content;
+  display: flex;
+  flex-direction: column;
+}
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .left .details .title {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .left .details .description {
+  margin-top: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings {
   display: flex;
   gap: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .create, .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .total {
-  outline: solid #444444 2px;
+  border: solid #444444 2px;
   border-radius: 1rem;
   padding: 1rem;
   width: 50%;
@@ -237,12 +245,11 @@ html, body {
   min-height: max-content;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .reviews {
-  outline: solid #444444 2px;
+  border: solid #444444 2px;
   border-radius: 1rem;
   padding: 1rem;
   width: 50%;
   overflow-y: auto;
-  font-size: 5rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .rating {
   display: flex;
@@ -261,10 +268,9 @@ html, body {
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame {
-  outline: solid #444444 2px;
+  border: solid #444444 2px;
   border-radius: 1rem;
   padding: 1rem;
   width: 50%;
@@ -319,6 +325,21 @@ html, body {
   width: min-content;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form button:hover {
+  outline: #ffffff solid 2px !important;
+}
+.sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form select {
+  padding: 1rem;
+  background-color: #222222;
+  outline: #444444 solid 2px !important;
+  border-radius: 1rem;
+  border: none;
+  color: #ffffff;
+  transition: all 0.2s ease-in-out;
+}
+.sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form select:hover {
+  outline: #ffffff solid 2px !important;
+}
+.sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form select:hover {
   outline: #ffffff solid 2px !important;
 }
 

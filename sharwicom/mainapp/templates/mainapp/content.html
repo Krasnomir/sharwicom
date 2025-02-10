@@ -7,40 +7,47 @@
 <script defer src="{% static 'mainapp/js/star-rating.js' %}"></script>
 
 <div class="content-wrapper">
-    <div class="left">
-        <div class="details">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta recusandae adipisci reprehenderit. Asperiores officia perferendis doloribus in suscipit totam unde iure quibusdam. Quos assumenda ipsa sint repellat adipisci dolore aut. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, dignissimos suscipit maiores ducimus sunt at cum minus accusamus dolorem. Magni fuga ut, minima nesciunt id facere consequatur voluptatum nemo eveniet! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto quos in earum voluptate itaque consequatur non beatae totam soluta neque? Ut facilis reiciendis nesciunt non officia aperiam veritatis odit reprehenderit. Lore Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit minus aut officiis esse, laboriosam corrupti maiores reiciendis eius aliquam mollitia dolore, rem neque, sed provident animi. Adipisci enim totam neque.
-        </div>
-        <div class="ratings">
-            <div class="create">
-                <div class="title">
-                    Your rating:
+    {% if success %}
+        <div class="left">
+            <div class="details">
+                <span class="title">{{title}}</span>
+                <span>{{type}}</span>
+                <span>by {{author}}</span>
+                <span class="description">{{description}}</span>
+            </div>
+            <div class="ratings">
+                <div class="create">
+                    <div class="title">
+                        Your rating:
+                    </div>
+                    <div class="rating interactable" data-rating="0">
+                        <div class="s1">★</div>
+                        <div class="s2">★</div>
+                        <div class="s3">★</div>
+                        <div class="s4">★</div>
+                        <div class="s5">★</div>
+                    </div>
                 </div>
-                <div class="rating interactable" data-rating="0">
-                    <div class="s1">★</div>
-                    <div class="s2">★</div>
-                    <div class="s3">★</div>
-                    <div class="s4">★</div>
-                    <div class="s5">★</div>
+                <div class="total">
+                    <div class="title">
+                        Community rating:
+                    </div>
+                    <div class="rating" data-rating="3">
+                        <div class="s1">★</div>
+                        <div class="s2">★</div>
+                        <div class="s3">★</div>
+                        <div class="s4">★</div>
+                        <div class="s5">★</div>
+                    </div>
                 </div>
             </div>
-            <div class="total">
-                <div class="title">
-                    Community rating:
-                </div>
-                <div class="rating" data-rating="3">
-                    <div class="s1">★</div>
-                    <div class="s2">★</div>
-                    <div class="s3">★</div>
-                    <div class="s4">★</div>
-                    <div class="s5">★</div>
-                </div>
-            </div>
         </div>
-    </div>
-    <div class="reviews">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi excepturi explicabo dolores sed dicta, impedit facere architecto eaque qui consectetur pariatur repellat odit mollitia odio corrupti nostrum quis aspernatur culpa! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae magni quod possimus eos omnis quo nisi, officia reiciendis dolorem reprehenderit nobis ad laboriosam exercitationem dolores, ut cupiditate quam officiis quidem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas iusto ex nemo amet labore dignissimos, qui ipsum rerum vitae ipsam sunt illo iste deserunt, reprehenderit, in ducimus saepe repellat at. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime aliquam quisquam animi eligendi neque sapiente, voluptatibus repellendus ducimus recusandae ea placeat non vitae, fugit facilis! Sequi maiores voluptate eaque molestias! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex et eius error magni voluptatibus officiis vel aperiam nesciunt molestias magnam. Quidem similique quae quas recusandae est iure at sint necessitatibus.
-    </div>
+        <div class="reviews">
+            
+        </div>
+    {% else %}
+        {{ message }}
+    {% endif %}
 </div>
 
 {% endblock %}

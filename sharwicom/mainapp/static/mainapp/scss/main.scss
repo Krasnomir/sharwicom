@@ -43,7 +43,7 @@ html, body {
 }
 
 @mixin frame {
-    outline: solid $color1 2px;
+    border: solid $color1 2px;
     border-radius: 1rem;
     padding: 1rem;
 }
@@ -136,6 +136,7 @@ html, body {
             height: 100%;
             flex-grow: 1;
             overflow: hidden;
+            padding: 1rem;
 
             .conversations-wrapper {
                 height: 100%;
@@ -223,7 +224,6 @@ html, body {
 
             .content-wrapper {
                 height: 100%;
-                padding: 1rem;
                 overflow: hidden;
                 display: flex;
                 gap: 1rem;
@@ -238,8 +238,18 @@ html, body {
                         @include frame();
                         flex-grow: 5;
                         overflow-y: auto;
-                        font-size: 6rem;
                         height: max-content;
+                        display: flex;
+                        flex-direction: column;
+
+                        .title {
+                            font-size: 1.5rem;
+                            font-weight: 900;
+                        }
+
+                        .description {
+                            margin-top: 1rem;
+                        }
                     }
 
                     .ratings {
@@ -262,7 +272,6 @@ html, body {
                     @include frame();
                     width: 50%;
                     overflow-y: auto;
-                    font-size: 5rem;
                 }  
 
                 .rating {
@@ -288,7 +297,6 @@ html, body {
                 align-items: center;
                 justify-content: center;
                 height: 100%;
-                padding: 1rem;
 
                 .create-frame {
                     @include frame();
@@ -314,6 +322,10 @@ html, body {
                         button {
                             @include button();
                             width: min-content;
+                        }
+
+                        select {
+                            @include input();
                         }
                     }
                 }

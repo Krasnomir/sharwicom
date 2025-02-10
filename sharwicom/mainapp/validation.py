@@ -1,5 +1,6 @@
 import re
 from django.contrib.auth.models import User
+from .models import Content, content_types
 
 # goes over and checks all the fields in the same order as they are passed as parameters
 # returns the error message or 0 if the data is correct
@@ -43,6 +44,43 @@ def validate_message(message):
     # allow messages that are from 1 to 500 characters long
     if not (1 <= len(message) < 500):
         return "Mesage can't be empty and can't be longer than 500 characters"
+    
+    # passed validation
+    return 0
+
+def validate_content(url_name, author, type, description):
+
+    if Content.objects.filter(url_name=url_name).exists():
+        return "Content with the specified title already exists in the database"
+
+    # url_name is the title converted to lowercase and spaces replaced with dashes
+    # only allow lowercase letters, numbers and dashes for the url_name
+    url_name_pattern = r'^[a-z0-9-]{3,20}$'
+    if not re.match(url_name_pattern, url_name):
+        return "Title cannot contain any special characters"
+
+    # only allow letters and numbers for the author's name
+    author_pattern = r'^[a-zA-Z0-9]{3,20}$'
+    if not re.match(author_pattern, author):
+        return "Author's name cannot contain any special characters"
+
+    if not len(url_name) > 1:
+        return "Title is too short"
+    
+    if not len(url_name) < 50:
+        return "Title is too long"
+    
+    if not len(author) > 1:
+        return "Author's name is too short"
+    
+    if not len(author) < 50:
+        return "Author's name is too long"
+
+    if not len(description) > 5:
+        return "Description is too short"
+
+    if not type in content_types:
+        return "Specified content type is invalid"
     
     # passed validation
     return 0

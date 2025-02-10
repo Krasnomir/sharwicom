@@ -3,9 +3,9 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth.models import User
-from .models import Conversation, Message
+from .models import Conversation, Message, Content
 from django.contrib.auth import authenticate
-from .validation import validate_register, validate_message
+from .validation import validate_register, validate_message, validate_content
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 
@@ -166,8 +166,50 @@ def send_conversation(request):
 
 def content(request, content_url_name):
     template = loader.get_template('mainapp/content.html')
-    return HttpResponse(template.render({}, request))
 
-def create_content(request):
-    template = loader.get_template('mainapp/create-content.html')
-    return HttpResponse(template.render({}, request))
+    try: content = Content.objects.get(url_name=content_url_name)
+    except: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
+
+    context = {
+        'success': True,
+        'title': content.title,
+        'author': content.author,
+        'type': content.type,
+        'description': content.description
+    }
+
+    return HttpResponse(template.render(context, request))
+
+def add_content(request):
+    context = {}
+
+    if request.method == 'POST':
+        
+        title = request.POST['title']
+        author = request.POST['author']
+        type = request.POST['type']
+        description = request.POST['description']
+        url_name = title.lower() # convert all the characters from title to lowercase
+        url_name = url_name.replace(" ",'-') # replace spaces with dashes
+
+        validation_message = validate_content(url_name, author, type, description)
+
+        if validation_message == 0:
+            content = Content()
+
+            content.title = title
+            content.url_name = url_name
+            content.author = author
+            content.type = type
+            content.description = description
+            content.save()
+        else:
+            context = {
+                'error_message': validation_message,
+                'title': title,
+                'author': author,
+                'description': description
+            }
+
+    template = loader.get_template('mainapp/add-content.html')
+    return HttpResponse(template.render(context, request))

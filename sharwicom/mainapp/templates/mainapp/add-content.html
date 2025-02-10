@@ -1,0 +1,30 @@
+{% extends "mainapp/home-base.html" %}
+
+{% load static %}
+
+{% block body %}
+
+<div class="content-creator-wrapper">
+    <div class="create-frame">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ error_message }}
+            <input name="title" placeholder="The content's title" value="{{title}}" type="text">
+            <input name="author" placeholder="The content's author" value="{{author}}" type="text">
+
+            <select name="type">
+                <option value="book">Book</option>
+                <option value="movie">Movie</option>
+                <option value="song">Song</option>
+                <option value="album">Album</option>
+                <option value="video">Video</option>
+                <option value="other">Other</option>
+            </select>
+
+            <textarea name="description" placeholder="The content's description" cols="50" rows="25">{{description}}</textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
