@@ -34,7 +34,11 @@ class Content(models.Model):
 
     def get_user_rating(self, user):
         return self.ratings.get(user.username, None)
-
-class Rating(models.Model):
+    
+class Review(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    stars = models.SmallIntegerField() # integers ranging from 1 to 5
+    date = models.DateTimeField(auto_now_add=True)
+    content = models.ForeignKey(Content, on_delete=models.CASCADE)
+
+    summary = models.CharField(max_length=50)
+    description = models.TextField()

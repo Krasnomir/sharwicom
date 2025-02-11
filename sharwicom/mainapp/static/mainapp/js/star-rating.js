@@ -20,6 +20,7 @@ function getCookie(name) {
 function rateAjaxRequest(contentUrlName, rating, ratingPanel) {
     const csrftoken = getCookie('csrftoken')
 
+    // send request to the server containing the content's name and the rating value
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `../rate-content/`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -30,16 +31,24 @@ function rateAjaxRequest(contentUrlName, rating, ratingPanel) {
     });
     xhr.send(data);
 
+    // update the rating panels once the client recieves the server's response
     xhr.onload = () => {
-        const ratingSuccessfull = JSON.parse(xhr.responseText);  // parse the response as JSON
+        const response = JSON.parse(xhr.responseText);  // parse the response as JSON
 
-        if(ratingSuccessfull) {
+        if(response.success) {
             ratingPanel.dataset.rating = rating;
+
+            checkStars(ratingPanel, rating, false);
+
+            const community_rating_panel = document.querySelector('.sharwicom-wrapper .rating.community');
+            checkStars(community_rating_panel, response.community_rating, true);
         }
     }
 }
 
 function checkStars(ratingPanel, starsToCheck, isPartiallyFillable) {
+    ratingPanel.dataset.rating = starsToCheck;
+
     if(isPartiallyFillable) {
         // unfill all stars
         for (const star of ratingPanel.children) {

@@ -1,5 +1,5 @@
 $color0: #222222;
-$color1: #444444;
+$color1: #333333;
 $color2: #ffffff;
 $color3: #6593e9;
 $starColor: #eeba2a;
@@ -267,11 +267,24 @@ html, body {
                         }
                     }
                 }
-
-                .reviews {
-                    @include frame();
+                
+                .right {
                     width: 50%;
-                    overflow-y: auto;
+                    display: flex;
+                    flex-direction: column;
+                    @include frame();
+
+                    .reviews {
+                        flex-grow: 1;
+                        overflow-y: auto;
+                        font-size: 5rem;
+                        margin-bottom: 1rem;
+                        overflow-x: hidden
+                    }
+
+                    button {
+                        @include button();
+                    }
                 }
 
                 .rating {

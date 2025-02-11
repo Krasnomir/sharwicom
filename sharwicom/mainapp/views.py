@@ -164,6 +164,14 @@ def send_conversation(request):
 
         return HttpResponse("")
 
+def get_community_rating(content):
+    community_rating = 0;
+
+    for value in content.ratings.values():
+        community_rating += int(value)
+
+    return community_rating / len(content.ratings)
+
 def content(request, content_url_name):
     template = loader.get_template('mainapp/content.html')
 
@@ -171,12 +179,7 @@ def content(request, content_url_name):
     except: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
     
     user_rating = content.get_user_rating(request.user)
-    community_rating = 0
-    
-    for value in content.ratings.values():
-        community_rating += int(value)
-
-    community_rating = community_rating / len(content.ratings)
+    community_rating = get_community_rating(content)
     
     context = {
         'success': True,
@@ -238,7 +241,7 @@ def rate_content(request):
         if previous_rating != rating: # checks if the user picks a different rating from the previous time
             if int(rating) in {1,2,3,4,5}: # checks if rating is valid
                 content.set_user_rating(request.user, rating)
-                return JsonResponse({"success": True})
+                return JsonResponse({"success": True, "community_rating": get_community_rating(content)})
                 
         return JsonResponse({"success": False})
 

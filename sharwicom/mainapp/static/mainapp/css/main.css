@@ -21,7 +21,7 @@ html, body {
   background: rgba(0, 0, 0, 0);
 }
 .sharwicom-wrapper *::-webkit-scrollbar-thumb, .sharwicom-wrapper .reviews::-webkit-scrollbar-thumb {
-  background: #444444;
+  background: #333333;
 }
 .sharwicom-wrapper *::-webkit-scrollbar-thumb:hover, .sharwicom-wrapper .reviews::-webkit-scrollbar-thumb:hover {
   background: #ffffff;
@@ -52,7 +52,7 @@ html, body {
 .sharwicom-wrapper .login-wrapper .fields input {
   padding: 1rem;
   background-color: #222222;
-  outline: #444444 solid 2px !important;
+  outline: #333333 solid 2px !important;
   border-radius: 1rem;
   border: none;
   color: #ffffff;
@@ -69,13 +69,13 @@ html, body {
 }
 .sharwicom-wrapper .login-wrapper .fields button {
   padding: 1rem;
-  background-color: #444444;
+  background-color: #333333;
   border-radius: 1rem;
   border: none;
   color: white;
   font-weight: 900;
   transition: all 0.2s ease-in-out;
-  outline: #444444 solid 2px !important;
+  outline: #333333 solid 2px !important;
   padding: 0.5rem;
   width: 8rem;
   margin-bottom: 1rem;
@@ -116,7 +116,7 @@ html, body {
   align-items: center;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .available-conversations, .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation {
-  border: solid #444444 2px;
+  border: solid #333333 2px;
   border-radius: 1rem;
   padding: 1rem;
   height: 60%;
@@ -136,7 +136,7 @@ html, body {
   background: rgba(0, 0, 0, 0);
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation::-webkit-scrollbar-thumb {
-  background: #444444;
+  background: #333333;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation::-webkit-scrollbar-thumb:hover {
   background: #ffffff;
@@ -155,7 +155,7 @@ html, body {
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation .you .message, .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .conversation .recipient .message {
   width: fit-content;
-  background-color: #444444;
+  background-color: #333333;
   padding: 1rem;
   border-radius: 1rem;
 }
@@ -175,7 +175,7 @@ html, body {
   flex-grow: 1;
   padding: 1rem;
   background-color: #222222;
-  outline: #444444 solid 2px !important;
+  outline: #333333 solid 2px !important;
   border-radius: 1rem;
   border: none;
   color: #ffffff;
@@ -189,13 +189,13 @@ html, body {
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .create .send-message {
   padding: 1rem;
-  background-color: #444444;
+  background-color: #333333;
   border-radius: 1rem;
   border: none;
   color: white;
   font-weight: 900;
   transition: all 0.2s ease-in-out;
-  outline: #444444 solid 2px !important;
+  outline: #333333 solid 2px !important;
   flex-shrink: 0;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .create .send-message:hover {
@@ -214,7 +214,7 @@ html, body {
   gap: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .details {
-  border: solid #444444 2px;
+  border: solid #333333 2px;
   border-radius: 1rem;
   padding: 1rem;
   flex-grow: 5;
@@ -235,7 +235,7 @@ html, body {
   gap: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .create, .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .total {
-  border: solid #444444 2px;
+  border: solid #333333 2px;
   border-radius: 1rem;
   padding: 1rem;
   width: 50%;
@@ -245,17 +245,38 @@ html, body {
   align-items: center;
   min-height: max-content;
 }
-.sharwicom-wrapper .home-wrapper .body .content-wrapper .reviews {
-  border: solid #444444 2px;
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  border: solid #333333 2px;
   border-radius: 1rem;
   padding: 1rem;
-  width: 50%;
+}
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .right .reviews {
+  flex-grow: 1;
   overflow-y: auto;
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  overflow-x: hidden;
+}
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .right button {
+  padding: 1rem;
+  background-color: #333333;
+  border-radius: 1rem;
+  border: none;
+  color: white;
+  font-weight: 900;
+  transition: all 0.2s ease-in-out;
+  outline: #333333 solid 2px !important;
+}
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .right button:hover {
+  outline: #ffffff solid 2px !important;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .rating {
   display: flex;
   font-size: 3rem;
-  color: #444444;
+  color: #333333;
   cursor: default;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .rating .partial-fill {
@@ -289,7 +310,7 @@ html, body {
   height: 100%;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame {
-  border: solid #444444 2px;
+  border: solid #333333 2px;
   border-radius: 1rem;
   padding: 1rem;
   width: 50%;
@@ -304,7 +325,7 @@ html, body {
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form input {
   padding: 1rem;
   background-color: #222222;
-  outline: #444444 solid 2px !important;
+  outline: #333333 solid 2px !important;
   border-radius: 1rem;
   border: none;
   color: #ffffff;
@@ -319,7 +340,7 @@ html, body {
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form textarea {
   padding: 1rem;
   background-color: #222222;
-  outline: #444444 solid 2px !important;
+  outline: #333333 solid 2px !important;
   border-radius: 1rem;
   border: none;
   color: #ffffff;
@@ -334,13 +355,13 @@ html, body {
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form button {
   padding: 1rem;
-  background-color: #444444;
+  background-color: #333333;
   border-radius: 1rem;
   border: none;
   color: white;
   font-weight: 900;
   transition: all 0.2s ease-in-out;
-  outline: #444444 solid 2px !important;
+  outline: #333333 solid 2px !important;
   width: min-content;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form button:hover {
@@ -349,7 +370,7 @@ html, body {
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form select {
   padding: 1rem;
   background-color: #222222;
-  outline: #444444 solid 2px !important;
+  outline: #333333 solid 2px !important;
   border-radius: 1rem;
   border: none;
   color: #ffffff;
