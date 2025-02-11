@@ -1,8 +1,18 @@
+/*
 $color0: #222222;
 $color1: #333333;
 $color2: #ffffff;
 $color3: #6593e9;
 $starColor: #eeba2a;
+*/
+$color0: #ffffff; // background
+$color1: #eeeeee; // frames/borders of panels
+$color2: #444444; // text
+$color3: #6593e9; // links
+$color4: #bbbbbb; // button hover
+$color5: #eeba2a; // stars
+$color6: $color3;   // user messages
+$color7: $color1;   // recipient messages
 
 html, body {
     margin: 0;
@@ -19,11 +29,7 @@ html, body {
     transition: all 0.2s ease-in-out;
 
     &:hover {
-        outline: $color2 solid 2px !important;
-    }
-
-    &:hover {
-        outline: $color2 solid 2px !important;
+        outline: $color4 solid 2px !important;
     }
 }
 
@@ -32,13 +38,13 @@ html, body {
     background-color: $color1;
     border-radius: 1rem;
     border: none;
-    color: white;
+    color: $color2;
     font-weight: 900;
     transition: all 0.2s ease-in-out;
     outline: $color1 solid 2px !important;
     
     &:hover {
-        outline: $color2 solid 2px !important;
+        outline: $color4 solid 2px !important;
     }
 }
 
@@ -199,7 +205,13 @@ html, body {
 
                             .message {
                                 margin-left: auto;
+                                background-color: $color6;
+                                color: $color0;
                             }
+                        }
+
+                        .recipient .message {
+                            background-color: $color7;
                         }
                     }
 
@@ -304,7 +316,7 @@ html, body {
                             top: 0;
                             left: 0;
                             content: "★";
-                            color: $starColor; // Filled star color
+                            color: $color5; // Filled star color
                             width: 100%;
                             overflow: hidden;
                             background: linear-gradient(
@@ -319,7 +331,7 @@ html, body {
                       
 
                     .checked {
-                        color: $starColor;
+                        color: $color5;
                     }
                 }
 
