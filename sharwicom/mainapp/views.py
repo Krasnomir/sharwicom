@@ -187,7 +187,6 @@ def content(request, content_url_name):
         'description': content.description,
         'user_rating': user_rating,
         'community_rating': community_rating,
-        'community_rating_rounded': round(community_rating) # to display a certain number of stars
     }
 
     return HttpResponse(template.render(context, request))

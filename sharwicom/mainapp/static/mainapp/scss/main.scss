@@ -255,10 +255,6 @@ html, body {
                     .ratings {
                         display: flex;
                         gap: 1rem;
-                        
-                        .number {
-                            font-weight: 900;
-                        }
 
                         .create, .total {
                             @include frame();
@@ -283,6 +279,31 @@ html, body {
                     font-size: 3rem;
                     color: $color1;
                     cursor: default;
+
+                    .partial-fill {
+                        position: relative;
+                        white-space: pre;
+                      
+                        &:before {
+                            display: block;
+                            position: absolute;
+                            z-index: 1;
+                            top: 0;
+                            left: 0;
+                            content: "★";
+                            color: $starColor; // Filled star color
+                            width: 100%;
+                            overflow: hidden;
+                            background: linear-gradient(
+                                to right,
+                                currentColor calc(var(--fill, 0%)),
+                                transparent 0%
+                            );
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                        }
+                      }
+                      
 
                     .checked {
                         color: $starColor;

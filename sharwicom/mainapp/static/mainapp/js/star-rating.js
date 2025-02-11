@@ -39,25 +39,43 @@ function rateAjaxRequest(contentUrlName, rating, ratingPanel) {
     }
 }
 
-function checkStars(ratingPanel, starsToCheck) {
-    // uncheck all the stars
-    for(const star1 of ratingPanel.children) {
-        star1.classList.remove('checked');
+function checkStars(ratingPanel, starsToCheck, isPartiallyFillable) {
+    if(isPartiallyFillable) {
+        // unfill all stars
+        for (const star of ratingPanel.children) {
+            star.style.setProperty('--fill', '0%');
+        }
+    
+        let rating = ratingPanel.dataset.rating;
+    
+        for (const star of ratingPanel.children) {
+            if (rating < 1) {
+                star.style.setProperty('--fill', rating * 100 + "%")
+                break;
+            } else {
+                star.style.setProperty('--fill', '100%');
+            }
+            rating -= 1;
+        }
     }
+    else {
+        // uncheck all the stars
+        for(const star of ratingPanel.children) {
+            star.classList.remove('checked');
+        }
 
-    const stars = ratingPanel.children;
+        const stars = ratingPanel.children;
 
-    // check the correct ammount of stars (passed as an argument)
-    for(let i = 0; i < starsToCheck; i++) {
-        stars[i].classList.add('checked');
+        // check the correct ammount of stars (passed as an argument)
+        for(let i = 0; i < starsToCheck; i++) {
+            stars[i].classList.add('checked');
+        }   
     }
 }
 
 const ratingPanels = document.querySelectorAll('.sharwicom-wrapper .rating');
 
 for(const ratingPanel of ratingPanels) {
-    checkStars(ratingPanel, ratingPanel.dataset.rating); // automatically check the stars specified in the data attribute so it doesnt have to be added manually
-
     for(const star of ratingPanel.children) {
         const contentUrlName = ratingPanel.dataset.content_url_name;
         const rating = star.className[1];
@@ -69,6 +87,8 @@ for(const ratingPanel of ratingPanels) {
 
     // hover effect for star ratings
     if(ratingPanel.classList[1] == 'interactable') {
+        checkStars(ratingPanel, ratingPanel.dataset.rating, false); // automatically check the stars specified in the data attribute so it doesnt have to be added manually
+
         for(const star of ratingPanel.children) {
             star.addEventListener('mouseover', (event) => {
                checkStars(ratingPanel, star.className[1]);
@@ -78,5 +98,9 @@ for(const ratingPanel of ratingPanels) {
                 checkStars(ratingPanel, ratingPanel.dataset.rating);
             });
         }
+    }
+    else {
+        // for those rating panels that may contain stars which are partially filled
+        checkStars(ratingPanel, ratingPanel.dataset.rating, true); // automatically check the stars specified in the data attribute so it doesnt have to be added manually
     }
 }

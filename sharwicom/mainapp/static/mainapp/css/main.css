@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html, body {
   margin: 0;
   height: 100%;
@@ -233,9 +234,6 @@ html, body {
   display: flex;
   gap: 1rem;
 }
-.sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .number {
-  font-weight: 900;
-}
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .create, .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .total {
   border: solid #444444 2px;
   border-radius: 1rem;
@@ -259,6 +257,24 @@ html, body {
   font-size: 3rem;
   color: #444444;
   cursor: default;
+}
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .rating .partial-fill {
+  position: relative;
+  white-space: pre;
+}
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .rating .partial-fill:before {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  content: "★";
+  color: #eeba2a;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(to right, currentColor calc(var(--fill, 0%)), transparent 0%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .rating .checked {
   color: #eeba2a;
