@@ -169,13 +169,25 @@ def content(request, content_url_name):
 
     try: content = Content.objects.get(url_name=content_url_name)
     except: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
+    
+    user_rating = content.get_user_rating(request.user)
+    community_rating = 0
+    
+    for value in content.ratings.values():
+        community_rating += int(value)
 
+    community_rating = community_rating / len(content.ratings)
+    
     context = {
         'success': True,
         'title': content.title,
+        'url_name': content.url_name,
         'author': content.author,
         'type': content.type,
-        'description': content.description
+        'description': content.description,
+        'user_rating': user_rating,
+        'community_rating': community_rating,
+        'community_rating_rounded': round(community_rating) # to display a certain number of stars
     }
 
     return HttpResponse(template.render(context, request))
@@ -213,3 +225,22 @@ def add_content(request):
 
     template = loader.get_template('mainapp/add-content.html')
     return HttpResponse(template.render(context, request))
+
+def rate_content(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        url_name = data.get('content_url_name')
+        rating = data.get('rating')
+
+        content = Content.objects.get(url_name=url_name)
+        previous_rating = content.get_user_rating(request.user)
+
+        if previous_rating != rating: # checks if the user picks a different rating from the previous time
+            if int(rating) in {1,2,3,4,5}: # checks if rating is valid
+                content.set_user_rating(request.user, rating)
+                return JsonResponse({"success": True})
+                
+        return JsonResponse({"success": False})
+
+    return HttpResponse('')

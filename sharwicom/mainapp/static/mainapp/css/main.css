@@ -233,6 +233,9 @@ html, body {
   display: flex;
   gap: 1rem;
 }
+.sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .number {
+  font-weight: 900;
+}
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .create, .sharwicom-wrapper .home-wrapper .body .content-wrapper .left .ratings .total {
   border: solid #444444 2px;
   border-radius: 1rem;

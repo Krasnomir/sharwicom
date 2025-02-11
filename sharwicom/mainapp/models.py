@@ -28,6 +28,13 @@ class Content(models.Model):
     type = models.CharField(max_length=20, default="book")
     ratings = models.JSONField(default=dict)
 
+    def set_user_rating(self, user, rating):
+        self.ratings[user.username] = rating
+        self.save()
+
+    def get_user_rating(self, user):
+        return self.ratings.get(user.username, None)
+
 class Rating(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     stars = models.SmallIntegerField() # integers ranging from 1 to 5

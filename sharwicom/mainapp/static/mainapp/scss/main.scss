@@ -255,6 +255,10 @@ html, body {
                     .ratings {
                         display: flex;
                         gap: 1rem;
+                        
+                        .number {
+                            font-weight: 900;
+                        }
 
                         .create, .total {
                             @include frame();
@@ -272,7 +276,7 @@ html, body {
                     @include frame();
                     width: 50%;
                     overflow-y: auto;
-                }  
+                }
 
                 .rating {
                     display: flex;
