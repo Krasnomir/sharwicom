@@ -44,3 +44,15 @@ class Review(models.Model):
     description = models.TextField()
 
     rating = models.SmallIntegerField(default=0)
+
+class Post(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+class Community(models.Model):
+    name = models.CharField(max_length=20)
+    url_name = models.CharField(max_length=20)
+    members = models.ManyToManyField(User, related_name='communities')
+    posts = models.ManyToManyField(Post, related_name='posts')

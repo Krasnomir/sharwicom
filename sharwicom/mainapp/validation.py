@@ -1,6 +1,7 @@
 import re
 from django.contrib.auth.models import User
 from .models import Content, content_types, Review
+from django.db.models import Q
 
 # goes over and checks all the fields in the same order as they are passed as parameters
 # returns the error message or 0 if the data is correct
@@ -78,6 +79,9 @@ def validate_content(url_name, author, type, description):
 
     if not len(description) > 5:
         return "Description is too short"
+    
+    if not len(description) < 2000:
+        return "Description is too long"
 
     if not type in content_types:
         return "Specified content type is invalid"
@@ -85,7 +89,7 @@ def validate_content(url_name, author, type, description):
     # passed validation
     return 0
 
-def validate_review(summary, description, user, isEdit):
+def validate_review(content, summary, description, user, isEdit):
 
     if not len(summary) < 100:
         return "Summary is too long"
@@ -101,7 +105,9 @@ def validate_review(summary, description, user, isEdit):
 
     if not isEdit:
         try: 
-            Review.objects.get(author=user)
+            Review.objects.get(Q(author=user) & Q(content=content))
             return "You have already written a review for this content"
         except:
             return 0 # passed validation
+
+    return 0 # passed validation

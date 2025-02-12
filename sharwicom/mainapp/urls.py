@@ -17,6 +17,8 @@ urlpatterns = [
     path('add-review/<str:content_url_name>', views.add_review, name='add_review'),
     path('edit-review/<str:content_url_name>', views.edit_review, name='edit_review'),
 
+    path('community/<str:community_url_name>', views.community, name='community'),
+
     path('login/', views.custom_login, name='custom_login'),
     path('register/', views.register, name='register')
 ]

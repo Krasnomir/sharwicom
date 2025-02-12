@@ -10,10 +10,10 @@
     {% if success %}
         <div class="left">
             <div class="details">
-                <span class="title">{{title}}</span>
-                <span>{{type}}</span>
-                <span>by {{author}}</span>
-                <span class="description">{{description}}</span>
+                <div class="title">{{title}}</div>
+                <div>{{type}}</div>
+                <div>by {{author}}</div>
+                <div class="description">{{description}}</div>
             </div>
             <div class="ratings">
                 <div class="create">
@@ -44,6 +44,9 @@
         </div>
         <div class="right">
             <div class="reviews">
+                <div class="title">
+                    Reviews:
+                </div>
                 {% for review in reviews %}
                     <div class="review">
                         <div class="author">
@@ -62,13 +65,12 @@
                                 <div class="s5">★</div>
                             </div>
                         </div>
-                        <div class="summary">
-                            {{review.summary}}
-                        </div>
-                        <div class="description">
-                            {{review.description}}
-                        </div>
+                        <div class="summary">{{review.summary}}</div>
+                        <div class="description">{{review.description}}</div>
                     </div>
+                    <hr>
+                {% empty %}
+                    There are no reviews for this content yet! Feel free to write one using buttons below:
                 {% endfor %}
             </div>
             <div class="buttons">

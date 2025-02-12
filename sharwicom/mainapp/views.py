@@ -167,12 +167,15 @@ def send_conversation(request):
         return HttpResponse("")
 
 def get_community_rating(content):
-    community_rating = 0;
+    community_rating = 0
 
     for value in content.ratings.values():
         community_rating += int(value)
 
-    return community_rating / len(content.ratings)
+    if(community_rating != 0):
+        return community_rating / len(content.ratings)
+    
+    return 0
 
 def content(request, content_url_name):
     template = loader.get_template('mainapp/content.html')
@@ -183,8 +186,9 @@ def content(request, content_url_name):
     user_rating = content.get_user_rating(request.user)
     community_rating = get_community_rating(content)
     
+    # check if user has written a review for this content
     has_review = True
-    try: Review.objects.get(author=request.user) 
+    try: Review.objects.get(Q(author=request.user) & Q(content=content)) 
     except: has_review = False
 
     context = {
@@ -196,7 +200,7 @@ def content(request, content_url_name):
         'description': content.description,
         'user_rating': user_rating,
         'community_rating': community_rating,
-        'reviews': Review.objects.filter(),
+        'reviews': Review.objects.filter(content=content),
         'has_review': has_review
     }
 
@@ -279,18 +283,24 @@ def add_review(request, content_url_name):
         summary = request.POST['summary']
         description = request.POST['description']
 
-        validation_message = validate_review(summary, description, request.user, False)
+        validation_message = validate_review(content, summary, description, request.user, False)
 
         if validation_message == 0:
             review = Review()
+
+            rating = content.get_user_rating(request.user) 
+            if rating != None:
+                review.rating = rating
 
             review.author = request.user
             review.content = content
             review.summary = summary
             review.description = description
             review.save()
+            return redirect('content', content.url_name) # redirect user to the content page if the review was created successfully
 
         else:
+            # save all the field values so the user wont have to retype them
             context = {
                 'success': True, # found content specified in the URL
                 'error_message': validation_message,
@@ -307,7 +317,8 @@ def edit_review(request, content_url_name):
     try: content = Content.objects.get(url_name=content_url_name)
     except: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
 
-    try: review = Review.objects.get(author=request.user)
+    print(request.user.username)
+    try: review = Review.objects.get(Q(author=request.user) & Q(content=content))
     except: return HttpResponse(template.render({'success': False, 'message': "This review does not exist!"}, request))
 
     context = {
@@ -320,12 +331,13 @@ def edit_review(request, content_url_name):
         summary = request.POST['summary']
         description = request.POST['description']
 
-        validation_message = validate_review(summary, description, request.user, True)
+        validation_message = validate_review(content, summary, description, request.user, True)
 
         if validation_message == 0:
             review.summary = summary
             review.description = description
             review.save()
+            return redirect('content', content.url_name) # redirect user to the content page if the review was updated successfully
 
         else:
             context = {
@@ -336,6 +348,7 @@ def edit_review(request, content_url_name):
                 'url_name': content_url_name
             }
     else:
+        # save all the field values so the user wont have to retype them
         context = {
             'success': True,
             'summary': review.summary,
@@ -344,3 +357,6 @@ def edit_review(request, content_url_name):
         }
 
     return HttpResponse(template.render(context, request))
+
+def community(request, community_url_name):
+    return HttpResponse('')
