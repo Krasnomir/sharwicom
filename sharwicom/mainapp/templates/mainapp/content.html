@@ -44,9 +44,42 @@
         </div>
         <div class="right">
             <div class="reviews">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error tempore amet expedita quaerat nulla reprehenderit, perspiciatis totam, similique incidunt fuga minima dolorum neque velit dolores aspernatur cum, ratione sunt sed! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos sint aspernatur vel adipisci. Odio non reiciendis dolorum illo ullam consequatur libero? Odit fuga incidunt labore iste corrupti, cumque alias adipisci.
+                {% for review in reviews %}
+                    <div class="review">
+                        <div class="author">
+                            <span>
+                                {% if review.author == request.user %}
+                                    You
+                                {% else %}
+                                    {{review.author.username}}
+                                {% endif %} 
+                            </span>
+                            <div class="rating review-rating" data-rating="{{review.rating}}">
+                                <div class="s1">★</div>
+                                <div class="s2">★</div>
+                                <div class="s3">★</div>
+                                <div class="s4">★</div>
+                                <div class="s5">★</div>
+                            </div>
+                        </div>
+                        <div class="summary">
+                            {{review.summary}}
+                        </div>
+                        <div class="description">
+                            {{review.description}}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-            <button>Write your review</button>
+            <div class="buttons">
+                {% if has_review %}
+                    <button disabled>Write your review</button>
+                    <a href="{% url 'edit_review' url_name %}"><button>Edit your existing review</button></a>
+                {% else %}
+                    <a href="{% url 'add_review' url_name %}"><button>Write your review</button></a>
+                    <button disabled>Edit your existing review</button>
+                {% endif %}
+            </div>
         </div>
     {% else %}
         {{ message }}

@@ -1,0 +1,24 @@
+{% extends "mainapp/home-base.html" %}
+
+{% load static %}
+
+{% block body %}
+
+{% if success %}
+    <div class="review-creator-wrapper">
+        <div class="create-frame">
+            <form action="" method="post">
+                <span>You are currently writing a review for <a href="{% url 'content' url_name %}">{{url_name}}</a></span>
+                {% csrf_token %}
+                {{error_message}}
+                <input name="summary" placeholder="Summary of the review" value="{{summary}}" type="text">
+                <textarea name="description" placeholder="Review description" cols="50" rows="25">{{description}}</textarea>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+{% else %}
+    {{message}}
+{% endif %}
+
+{% endblock %}

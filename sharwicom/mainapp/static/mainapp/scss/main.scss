@@ -43,8 +43,12 @@ html, body {
     transition: all 0.2s ease-in-out;
     outline: $color1 solid 2px !important;
     
-    &:hover {
+    &:not(:disabled):hover {
         outline: $color4 solid 2px !important;
+    }
+
+    &:disabled {
+        background-color: $color0;
     }
 }
 
@@ -289,13 +293,42 @@ html, body {
                     .reviews {
                         flex-grow: 1;
                         overflow-y: auto;
-                        font-size: 5rem;
                         margin-bottom: 1rem;
-                        overflow-x: hidden
+                        overflow-x: hidden;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 2rem;
+
+                        .review {
+                            display: flex;
+                            flex-direction: column;
+
+                            .author {
+                                display: flex;
+                                align-items: center;
+                                gap: 0.5rem;
+                                
+                                .rating {
+                                    font-size: 1.5rem;
+                                }
+                            }
+
+                            .summary {
+                                font-size: 1.5rem;
+                            }
+                        }
                     }
 
-                    button {
-                        @include button();
+                    .buttons {
+                        display: flex;
+                        gap: 1rem;
+                        width: 100%;
+                        align-items: center;
+                        justify-content: center;
+
+                        button {
+                            @include button();
+                        }
                     }
                 }
 
@@ -342,7 +375,7 @@ html, body {
                 }
             }
 
-            .content-creator-wrapper {
+            .content-creator-wrapper, .review-creator-wrapper {
                 display: flex;
                 align-items: center;
                 justify-content: center;

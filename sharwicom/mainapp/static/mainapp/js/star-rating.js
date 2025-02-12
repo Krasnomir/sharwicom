@@ -40,14 +40,24 @@ function rateAjaxRequest(contentUrlName, rating, ratingPanel) {
 
             checkStars(ratingPanel, rating, false);
 
+            // update the community rating panel
             const community_rating_panel = document.querySelector('.sharwicom-wrapper .rating.community');
             checkStars(community_rating_panel, response.community_rating, true);
+
+            /*
+            // update the review rating panels
+            const review_rating_panels = document.querySelectorAll('.sharwicom-wrapper .rating.review-rating');
+            for(panel of review_rating_panels) {
+                console.log('test');
+                checkStars(panel, panel.dataset.rating, false);
+            }
+            */
         }
     }
 }
 
-function checkStars(ratingPanel, starsToCheck, isPartiallyFillable) {
-    ratingPanel.dataset.rating = starsToCheck;
+function checkStars(ratingPanel, starsToCheck, isPartiallyFillable, updateDataAttribute=true) {
+    if(updateDataAttribute) ratingPanel.dataset.rating = starsToCheck;
 
     if(isPartiallyFillable) {
         // unfill all stars
@@ -100,16 +110,22 @@ for(const ratingPanel of ratingPanels) {
 
         for(const star of ratingPanel.children) {
             star.addEventListener('mouseover', (event) => {
-               checkStars(ratingPanel, star.className[1]);
+               checkStars(ratingPanel, star.className[1], false, false);
             });
     
             star.addEventListener('mouseout', (event) => {
-                checkStars(ratingPanel, ratingPanel.dataset.rating);
+                console.log('out');
+                checkStars(ratingPanel, ratingPanel.dataset.rating, false, false);
             });
         }
     }
     else {
-        // for those rating panels that may contain stars which are partially filled
-        checkStars(ratingPanel, ratingPanel.dataset.rating, true); // automatically check the stars specified in the data attribute so it doesnt have to be added manually
+        if(ratingPanel.classList[1] == 'community') {
+            // for those rating panels that may contain stars which are partially filled
+            checkStars(ratingPanel, ratingPanel.dataset.rating, true); // automatically check the stars specified in the data attribute so it doesnt have to be added manually
+        }
+        else {
+            checkStars(ratingPanel, ratingPanel.dataset.rating, false);
+        }
     }
 }

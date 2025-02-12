@@ -3,9 +3,9 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth.models import User
-from .models import Conversation, Message, Content
+from .models import Conversation, Message, Content, Review
 from django.contrib.auth import authenticate
-from .validation import validate_register, validate_message, validate_content
+from .validation import validate_register, validate_message, validate_content, validate_review
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 
@@ -127,6 +127,7 @@ def register(request):
 
     return HttpResponse(template.render(context, request))
 
+# view for handling AJAX requests
 def sync_conversation(request):
     if request.method == 'GET':
         user_username = request.GET.get('user1', '')
@@ -141,6 +142,7 @@ def sync_conversation(request):
 
             return JsonResponse({'success': 'true', 'messages': list(messages)})
 
+# view for handling AJAX requests
 def send_conversation(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -181,6 +183,10 @@ def content(request, content_url_name):
     user_rating = content.get_user_rating(request.user)
     community_rating = get_community_rating(content)
     
+    has_review = True
+    try: Review.objects.get(author=request.user) 
+    except: has_review = False
+
     context = {
         'success': True,
         'title': content.title,
@@ -190,9 +196,38 @@ def content(request, content_url_name):
         'description': content.description,
         'user_rating': user_rating,
         'community_rating': community_rating,
+        'reviews': Review.objects.filter(),
+        'has_review': has_review
     }
 
     return HttpResponse(template.render(context, request))
+
+# view for handling AJAX requests
+def rate_content(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        url_name = data.get('content_url_name')
+        rating = data.get('rating')
+
+        content = Content.objects.get(url_name=url_name)
+        previous_rating = content.get_user_rating(request.user)
+
+        if previous_rating != rating: # checks if the user picks a different rating from the previous time
+            if int(rating) in {1,2,3,4,5}: # checks if rating is valid
+                content.set_user_rating(request.user, rating)
+
+                # update the user's review (if he has written one)
+                review = Review.objects.get(author=request.user)
+                if(review != None):
+                    review.rating = rating
+                    review.save()
+
+                return JsonResponse({"success": True, "community_rating": get_community_rating(content)})
+                
+        return JsonResponse({"success": False})
+
+    return HttpResponse('')
 
 def add_content(request):
     context = {}
@@ -208,7 +243,7 @@ def add_content(request):
 
         validation_message = validate_content(url_name, author, type, description)
 
-        if validation_message == 0:
+        if validation_message == 0: # if validation was successfull
             content = Content()
 
             content.title = title
@@ -228,21 +263,84 @@ def add_content(request):
     template = loader.get_template('mainapp/add-content.html')
     return HttpResponse(template.render(context, request))
 
-def rate_content(request):
+def add_review(request, content_url_name):
+    template = loader.get_template('mainapp/add-review.html')
+
+    try: content = Content.objects.get(url_name=content_url_name)
+    except: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
+
+    context = {
+        'success': True,
+        'url_name': content_url_name
+    }
+
     if request.method == 'POST':
-        data = json.loads(request.body)
 
-        url_name = data.get('content_url_name')
-        rating = data.get('rating')
+        summary = request.POST['summary']
+        description = request.POST['description']
 
-        content = Content.objects.get(url_name=url_name)
-        previous_rating = content.get_user_rating(request.user)
+        validation_message = validate_review(summary, description, request.user, False)
 
-        if previous_rating != rating: # checks if the user picks a different rating from the previous time
-            if int(rating) in {1,2,3,4,5}: # checks if rating is valid
-                content.set_user_rating(request.user, rating)
-                return JsonResponse({"success": True, "community_rating": get_community_rating(content)})
-                
-        return JsonResponse({"success": False})
+        if validation_message == 0:
+            review = Review()
 
-    return HttpResponse('')
+            review.author = request.user
+            review.content = content
+            review.summary = summary
+            review.description = description
+            review.save()
+
+        else:
+            context = {
+                'success': True, # found content specified in the URL
+                'error_message': validation_message,
+                'summary': summary,
+                'description': description,
+                'url_name': content_url_name
+            }
+
+    return HttpResponse(template.render(context, request))
+
+def edit_review(request, content_url_name):
+    template = loader.get_template('mainapp/add-review.html')
+
+    try: content = Content.objects.get(url_name=content_url_name)
+    except: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
+
+    try: review = Review.objects.get(author=request.user)
+    except: return HttpResponse(template.render({'success': False, 'message': "This review does not exist!"}, request))
+
+    context = {
+        'success': True,
+        'url_name': content_url_name
+    }
+
+    if request.method == 'POST':
+
+        summary = request.POST['summary']
+        description = request.POST['description']
+
+        validation_message = validate_review(summary, description, request.user, True)
+
+        if validation_message == 0:
+            review.summary = summary
+            review.description = description
+            review.save()
+
+        else:
+            context = {
+                'success': True, # found content specified in the URL
+                'error_message': validation_message,
+                'summary': summary,
+                'description': description,
+                'url_name': content_url_name
+            }
+    else:
+        context = {
+            'success': True,
+            'summary': review.summary,
+            'description': review.description,
+            'url_name': content_url_name
+        }
+
+    return HttpResponse(template.render(context, request))

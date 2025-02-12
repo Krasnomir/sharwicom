@@ -42,3 +42,5 @@ class Review(models.Model):
 
     summary = models.CharField(max_length=50)
     description = models.TextField()
+
+    rating = models.SmallIntegerField(default=0)
