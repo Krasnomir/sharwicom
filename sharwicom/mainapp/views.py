@@ -222,13 +222,13 @@ def rate_content(request):
                 content.set_user_rating(request.user, rating)
 
                 # update the user's review (if he has written one)
-                review = Review.objects.get(author=request.user)
+                review = Review.objects.get(Q(author=request.user) & Q(content=content))
                 if(review != None):
                     review.rating = rating
                     review.save()
 
                 return JsonResponse({"success": True, "community_rating": get_community_rating(content)})
-                
+        
         return JsonResponse({"success": False})
 
     return HttpResponse('')
