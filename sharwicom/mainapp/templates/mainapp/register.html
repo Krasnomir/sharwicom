@@ -23,8 +23,9 @@
         {{ form.password.label_tag }}
         {{ form.password }}
 
-        {{ form.captcha.label_tag }}
-        {{ form.captcha }}
+        <div class="captcha-panel">
+            {{ form.captcha }}
+        </div>
 
         {% if form.non_field_errors %}
             {{form.non_field_errors}}

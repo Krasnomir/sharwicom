@@ -4,6 +4,7 @@ from captcha.fields import CaptchaField
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=20)
     password = forms.CharField(widget=forms.PasswordInput)
+    captcha = CaptchaField()
 
 class RegisterForm(forms.Form):
     username = forms.CharField(max_length=20)

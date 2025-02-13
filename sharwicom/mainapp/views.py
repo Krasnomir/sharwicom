@@ -75,26 +75,29 @@ def conversation(request, recipient_name):
 
 def custom_login(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
+        form = LoginForm(request.POST) # create a form object and fill it with data from POST request
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             
+            # check if user has provided right username and password, if they did, log them in, if they didn't display the error message
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                return redirect('index')
+                return redirect('index') 
             else:
                 form.add_error(None, "Incorrect username or password")
+        else:
+            form.add_error(None, "Captcha verification failed")
     else:
-        form = LoginForm()
+        form = LoginForm() # display an empty form if the request method is GET
 
     return render(request, 'mainapp/login.html', {'form': form})
 
 
 def register(request):
     if request.method == "POST":
-        form = RegisterForm(request.POST)
+        form = RegisterForm(request.POST) # create a form object and fill it with data from POST request
         if form.is_valid():
             username = form.cleaned_data['username']
             first_name = form.cleaned_data['first_name']
@@ -102,20 +105,26 @@ def register(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             
+            # additional checks like password strength
             validation_message = validate_register(username, first_name, last_name, email, password)
             
-            if validation_message == 0:
+            if validation_message == 0: # if the validation was passed
+
+                # create a new user object
                 user = User.objects.create_user(first_name, email, password)
                 user.last_name = last_name
                 user.username = username
-
                 user.save()
+                
+                login(request, user) # automatically login the user after they create an account
 
-                return redirect('index')
+                return redirect('index') # redirect user to the homepage after successfull register
             else:
-                form.add_error(None, validation_message)
+                form.add_error(None, validation_message) # display the validation error
+        else:
+            form.add_error(None, "Captcha verification failed")
     else:
-        form = RegisterForm()
+        form = RegisterForm() # display an empty form if the request method is GET
 
     return render(request, 'mainapp/register.html', {'form': form})
 
@@ -215,8 +224,8 @@ def rate_content(request):
                 content.set_user_rating(request.user, rating)
 
                 # update the user's review (if he has written one)
-                review = Review.objects.get(Q(author=request.user) & Q(content=content))
-                if(review != None):
+                review = Review.objects.filter(Q(author=request.user) & Q(content=content)).first()
+                if review:
                     review.rating = rating
                     review.save()
 
