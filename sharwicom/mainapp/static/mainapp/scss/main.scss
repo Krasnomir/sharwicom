@@ -120,6 +120,19 @@ html, body {
                 width: 8rem;
                 margin-bottom: 1rem;
             }
+
+            ul {
+                margin: 0;
+                padding: 0;
+                list-style-type: none;
+                margin-bottom: 1rem;
+            }
+
+            img {
+                @include input();
+                width: 8rem;
+                padding: 0;
+            }
         }
     }
 

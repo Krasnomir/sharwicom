@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 from .validation import validate_register, validate_message, validate_content, validate_review
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
+from .forms import LoginForm, RegisterForm
 
 def index(request):
     return redirect('home')
@@ -73,59 +74,51 @@ def conversation(request, recipient_name):
     return HttpResponse(template.render(context, request))
 
 def custom_login(request):
-    template = loader.get_template('mainapp/login.html')
-    context = {}
-
-    # redirects to the index page if the username and the password are correct and displays a message if they aren't
-    if(request.method == "POST"):
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(username=username,password=password)
-
-        if user is not None:
-            if request.user.is_authenticated:
-                logout(request)
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
             
-            login(request, user)
-            return redirect('index')
-        else:
-            context = {'error_message': "Incorrect username or password"}
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect('index')
+            else:
+                form.add_error(None, "Incorrect username or password")
+    else:
+        form = LoginForm()
 
-    return HttpResponse(template.render(context, request))
+    return render(request, 'mainapp/login.html', {'form': form})
+
 
 def register(request):
-    template = loader.get_template('mainapp/register.html')
-    context = {}
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            
+            validation_message = validate_register(username, first_name, last_name, email, password)
+            
+            if validation_message == 0:
+                user = User.objects.create_user(first_name, email, password)
+                user.last_name = last_name
+                user.username = username
 
-    if(request.method == "POST"):
-        username = request.POST["username"]
-        first_name = request.POST["first-name"]
-        last_name = request.POST["last-name"]
-        email = request.POST["email"]
-        password = request.POST["password"]
+                user.save()
 
-        # display what is wrong with the inputted data or add the new account to the database and redirect user to the index page
-        validationMessage = validate_register(username, first_name, last_name, email, password)
-        if(validationMessage) == 0:
-            user = User.objects.create_user(first_name, email, password)
-            user.last_name = last_name
-            user.username = username
+                return redirect('index')
+            else:
+                form.add_error(None, validation_message)
+    else:
+        form = RegisterForm()
 
-            user.save()
+    return render(request, 'mainapp/register.html', {'form': form})
 
-            return redirect('index')
-        else:
-            # this is just to save the inputted data so the user won't have to fill all the fields again
-            context = {
-                'error_message': validationMessage,
-                'username': username,
-                'first_name': first_name,
-                'last_name': last_name,
-                'email': email,
-                'password': password,
-            }
-
-    return HttpResponse(template.render(context, request))
 
 # view for handling AJAX requests
 def sync_conversation(request):

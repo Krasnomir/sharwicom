@@ -90,6 +90,26 @@ html, body {
 .sharwicom-wrapper .login-wrapper .fields button:disabled {
   background-color: #ffffff;
 }
+.sharwicom-wrapper .login-wrapper .fields ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  margin-bottom: 1rem;
+}
+.sharwicom-wrapper .login-wrapper .fields img {
+  padding: 1rem;
+  background-color: #ffffff;
+  outline: #eeeeee solid 2px !important;
+  border-radius: 1rem;
+  border: none;
+  color: #444444;
+  transition: all 0.2s ease-in-out;
+  width: 8rem;
+  padding: 0;
+}
+.sharwicom-wrapper .login-wrapper .fields img:hover {
+  outline: #bbbbbb solid 2px !important;
+}
 .sharwicom-wrapper .home-wrapper {
   height: 100%;
   overflow: hidden;
