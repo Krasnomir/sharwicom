@@ -36,6 +36,27 @@ html, body {
 .sharwicom-wrapper a {
   color: #6593e9;
 }
+.sharwicom-wrapper .captcha-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid #eeeeee 2px;
+  border-radius: 1rem;
+  padding: 1rem;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  width: 15rem;
+}
+.sharwicom-wrapper .captcha-panel * {
+  margin: 0;
+}
+.sharwicom-wrapper .captcha-panel img {
+  height: 40px;
+}
+.sharwicom-wrapper .captcha-panel input {
+  width: 4rem;
+  margin-bottom: 0;
+}
 .sharwicom-wrapper .login-wrapper {
   height: 100%;
   overflow: hidden;
@@ -105,13 +126,17 @@ html, body {
   padding: 1rem;
   gap: 1rem;
   margin-bottom: 1rem;
-  width: 20rem;
+  width: 15rem;
 }
 .sharwicom-wrapper .login-wrapper .fields .captcha-panel * {
   margin: 0;
 }
 .sharwicom-wrapper .login-wrapper .fields .captcha-panel img {
-  height: 3rem;
+  height: 40px;
+}
+.sharwicom-wrapper .login-wrapper .fields .captcha-panel input {
+  width: 4rem;
+  margin-bottom: 0;
 }
 .sharwicom-wrapper .home-wrapper {
   height: 100%;
@@ -394,6 +419,9 @@ html, body {
   justify-content: center;
   height: 100%;
 }
+.sharwicom-wrapper .home-wrapper .body .content-creator-wrapper span, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper span {
+  margin-bottom: 1rem;
+}
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame {
   border: solid #eeeeee 2px;
   border-radius: 1rem;
@@ -405,7 +433,6 @@ html, body {
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form input, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form input {
   padding: 1rem;
@@ -415,6 +442,8 @@ html, body {
   border: none;
   color: #444444;
   transition: all 0.2s ease-in-out;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form input:hover, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form input:hover {
   outline: #bbbbbb solid 2px !important;
@@ -428,6 +457,8 @@ html, body {
   color: #444444;
   transition: all 0.2s ease-in-out;
   resize: none;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form textarea:hover, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form textarea:hover {
   outline: #bbbbbb solid 2px !important;
@@ -442,6 +473,9 @@ html, body {
   transition: all 0.2s ease-in-out;
   outline: #eeeeee solid 2px !important;
   width: min-content;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  width: 8rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form button:not(:disabled):hover, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form button:not(:disabled):hover {
   outline: #bbbbbb solid 2px !important;
@@ -457,9 +491,20 @@ html, body {
   border: none;
   color: #444444;
   transition: all 0.2s ease-in-out;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form select:hover, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form select:hover {
   outline: #bbbbbb solid 2px !important;
+}
+.sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form .captcha-panel input, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form .captcha-panel input {
+  margin: 0;
+}
+.sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form ul, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  margin-bottom: 1rem;
 }
 
 /*# sourceMappingURL=main.css.map */

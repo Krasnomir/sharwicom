@@ -65,14 +65,19 @@ html, body {
     @include frame();
     gap: 1rem;
     margin-bottom: 1rem;
-    width: 20rem;
+    width: 15rem;
 
     * {
         margin: 0;
     }
 
     img {
-        height: 3rem;
+        height: 40px;
+    }
+
+    input {
+        width: 4rem;
+        margin-bottom: 0;
     }
 }
 
@@ -102,6 +107,10 @@ html, body {
 
     a {
         color: $color3;
+    }
+
+    .captcha-panel {
+        @include captcha-panel();
     }
 
     .login-wrapper {
@@ -435,6 +444,10 @@ html, body {
                 align-items: center;
                 justify-content: center;
                 height: 100%;
+                
+                span {
+                    margin-bottom: 1rem
+                }
 
                 .create-frame {
                     @include frame();
@@ -445,26 +458,47 @@ html, body {
                     form {
                         display: flex;
                         flex-direction: column;
-                        gap: 1rem;
-                        
 
                         input {
                             @include input();
+                            margin-bottom: 1rem;
+                            padding: 0.5rem
                         }
 
                         textarea {
                             @include input();
                             resize: none;
+                            margin-bottom: 1rem;
+                            padding: 0.5rem
                         }
 
                         button {
                             @include button();
                             width: min-content;
+                            margin-bottom: 1rem;
+                            padding: 0.5rem;
+                            width: 8rem
                         }
 
                         select {
                             @include input();
+                            margin-bottom: 1rem;
+                            padding: 0.5rem;
                         }
+
+                        .captcha-panel {
+                            input {
+                                margin: 0;
+                            }
+                        }
+
+                        ul {
+                            margin: 0;
+                            padding: 0;
+                            list-style-type: none;
+                            margin-bottom: 1rem;
+                        }
+            
                     }
                 }
             }

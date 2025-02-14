@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate
 from .validation import validate_register, validate_message, validate_content, validate_review
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, ContentForm, ReviewForm
 
 def index(request):
     return redirect('home')
@@ -236,129 +236,133 @@ def rate_content(request):
     return HttpResponse('')
 
 def add_content(request):
-    context = {}
+    if request.method == 'POST': 
+        form = ContentForm(request.POST) # create a form object and fill it with data from POST request
 
-    if request.method == 'POST':
-        
-        title = request.POST['title']
-        author = request.POST['author']
-        type = request.POST['type']
-        description = request.POST['description']
-        url_name = title.lower() # convert all the characters from title to lowercase
-        url_name = url_name.replace(" ",'-') # replace spaces with dashes
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            author = form.cleaned_data['author']
+            type = form.cleaned_data['type']
+            description = form.cleaned_data['description']
+            url_name = title.lower() # convert all the characters from title to lowercase
+            url_name = url_name.replace(" ",'-') # replace spaces with dashes
 
-        validation_message = validate_content(url_name, author, type, description)
+            validation_message = validate_content(url_name, author, type, description)
 
-        if validation_message == 0: # if validation was successfull
-            content = Content()
+            if validation_message == 0: # if validation was successfull
+                content = Content()
 
-            content.title = title
-            content.url_name = url_name
-            content.author = author
-            content.type = type
-            content.description = description
-            content.save()
+                content.title = title
+                content.url_name = url_name
+                content.author = author
+                content.type = type
+                content.description = description
+                content.save()
+
+                return redirect('content', url_name)
+            else:
+                form.add_error(None, validation_message) # display the validation error
         else:
-            context = {
-                'error_message': validation_message,
-                'title': title,
-                'author': author,
-                'description': description
-            }
+            form.add_error(None, "Captcha verification failed")
+    else:
+        form = ContentForm() # display an empty form if the request method is GET
 
-    template = loader.get_template('mainapp/add-content.html')
-    return HttpResponse(template.render(context, request))
+    return render(request, 'mainapp/add-content.html', {'form': form})
 
 def add_review(request, content_url_name):
     template = loader.get_template('mainapp/add-review.html')
 
     try: content = Content.objects.get(url_name=content_url_name)
-    except: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
+    except Content.DoesNotExist: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+
+        if form.is_valid():
+            summary = form.cleaned_data['summary']
+            description = form.cleaned_data['description']
+
+            validation_message = validate_review(content, summary, description, request.user, False)
+
+            if validation_message == 0:
+                review = Review()
+
+                review.summary = summary
+                review.description = description
+                review.author = request.user
+                review.content = content
+
+                rating = content.get_user_rating(request.user) 
+                if rating != None:
+                    review.rating = rating
+
+                review.save()
+                return redirect('content', content.url_name)
+            else:
+                form.add_error(None, validation_message) # display the validation error
+        else:
+            form.add_error(None, "Captcha verification failed")
+    else:
+        form = ReviewForm() # display an empty form if the request method is GET
 
     context = {
         'success': True,
-        'url_name': content_url_name
+        'form': form,
+        'url_name': content.url_name,
     }
 
-    if request.method == 'POST':
-
-        summary = request.POST['summary']
-        description = request.POST['description']
-
-        validation_message = validate_review(content, summary, description, request.user, False)
-
-        if validation_message == 0:
-            review = Review()
-
-            rating = content.get_user_rating(request.user) 
-            if rating != None:
-                review.rating = rating
-
-            review.author = request.user
-            review.content = content
-            review.summary = summary
-            review.description = description
-            review.save()
-            return redirect('content', content.url_name) # redirect user to the content page if the review was created successfully
-
-        else:
-            # save all the field values so the user wont have to retype them
-            context = {
-                'success': True, # found content specified in the URL
-                'error_message': validation_message,
-                'summary': summary,
-                'description': description,
-                'url_name': content_url_name
-            }
-
-    return HttpResponse(template.render(context, request))
+    return render(request, 'mainapp/add-review.html', context)
 
 def edit_review(request, content_url_name):
     template = loader.get_template('mainapp/add-review.html')
 
     try: content = Content.objects.get(url_name=content_url_name)
-    except: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
+    except Content.DoesNotExist: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
 
-    print(request.user.username)
     try: review = Review.objects.get(Q(author=request.user) & Q(content=content))
     except: return HttpResponse(template.render({'success': False, 'message': "This review does not exist!"}, request))
 
-    context = {
-        'success': True,
-        'url_name': content_url_name
-    }
-
     if request.method == 'POST':
+        form = ReviewForm(request.POST)
 
-        summary = request.POST['summary']
-        description = request.POST['description']
+        if form.is_valid():
+            summary = form.cleaned_data['summary']
+            description = form.cleaned_data['description']
 
-        validation_message = validate_review(content, summary, description, request.user, True)
+            validation_message = validate_review(content, summary, description, request.user, True)
 
-        if validation_message == 0:
-            review.summary = summary
-            review.description = description
-            review.save()
-            return redirect('content', content.url_name) # redirect user to the content page if the review was updated successfully
+            if validation_message == 0:
+                review = Review()
 
+                review.summary = summary
+                review.description = description
+                review.author = request.user
+                review.content = content
+
+                rating = content.get_user_rating(request.user) 
+                if rating != None:
+                    review.rating = rating
+
+                review.save()
+                return redirect('content', content.url_name)
+            else:
+                form.add_error(None, validation_message) # display the validation error
         else:
-            context = {
-                'success': True, # found content specified in the URL
-                'error_message': validation_message,
-                'summary': summary,
-                'description': description,
-                'url_name': content_url_name
-            }
+            form.add_error(None, "Captcha verification failed")
     else:
-        # save all the field values so the user wont have to retype them
-        context = {
-            'success': True,
+        form = ReviewForm() # display an empty form if the request method is GET
+        form = ReviewForm(initial={
             'summary': review.summary,
             'description': review.description,
-            'url_name': content_url_name
-        }
+        })
 
-    return HttpResponse(template.render(context, request))
+    context = {
+        'success': True,
+        'form': form,
+        'url_name': content.url_name,
+    }
+
+    return render(request, 'mainapp/add-review.html', context)
 
 def community(request, community_url_name):
     return HttpResponse('')

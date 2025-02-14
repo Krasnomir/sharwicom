@@ -61,7 +61,7 @@ def validate_content(url_name, author, type, description):
         return "Title cannot contain any special characters"
 
     # only allow letters and numbers for the author's name
-    author_pattern = r'^[a-zA-Z0-9]{3,20}$'
+    author_pattern = r'^[a-zA-Z0-9\s]{3,20}$'
     if not re.match(author_pattern, author):
         return "Author's name cannot contain any special characters"
 
