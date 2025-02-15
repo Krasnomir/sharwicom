@@ -1,8 +1,15 @@
 {% extends "mainapp/home-base.html" %}
 {% block body %}
 
+{% load static %}
+
+<script src="{% static 'mainapp/js/search-conversations-ajax.js' %}"></script>
+
 <div class="conversations-wrapper">
     <div class="available-conversations">
+        <div class="title">
+            Active conversations:
+        </div>
     {% for conv in convs %}
         <div class="available-conversation">
         {% if conv.person1 == request.user %}
@@ -12,6 +19,26 @@
         {% endif %}
         </div>
     {% endfor %}
+    </div>
+    <div class="search-conversations">
+        <div class ="search-input">
+            <input type="text" placeholder="Search people" id="search-query">
+            <button id="search-button">🔎</button>
+        </div>
+        <div class="search-results">
+            <div class="search-result">
+                Lorem
+            </div>
+            <div class="search-result">
+                Lorem
+            </div>
+            <div class="search-result">
+                Lorem
+            </div>
+            <div class="search-result">
+                Lorem
+            </div>
+        </div>
     </div>
 </div>
 

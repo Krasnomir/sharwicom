@@ -18,7 +18,11 @@
             <div class="ratings">
                 <div class="create">
                     <div class="title">
-                        Your rating:
+                        {% if not is_authenticated %}
+                            <a href="{% url 'custom_login' %}">Log in</a>, in order to vote
+                        {% else %}
+                            Your rating:
+                        {% endif %}
                     </div>
                     <div class="rating interactable" data-rating="{{user_rating}}" data-content_url_name="{{url_name}}">
                         <div class="s1">★</div>

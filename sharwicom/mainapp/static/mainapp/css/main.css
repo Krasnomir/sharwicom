@@ -45,7 +45,8 @@ html, body {
   padding: 1rem;
   gap: 1rem;
   margin-bottom: 1rem;
-  width: 15rem;
+  width: 12rem;
+  padding: 0.5rem !important;
 }
 .sharwicom-wrapper .captcha-panel * {
   margin: 0;
@@ -78,7 +79,7 @@ html, body {
   width: 30%;
 }
 .sharwicom-wrapper .login-wrapper .fields input {
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #ffffff;
   outline: #eeeeee solid 2px !important;
   border-radius: 1rem;
@@ -93,7 +94,7 @@ html, body {
   outline: #bbbbbb solid 2px !important;
 }
 .sharwicom-wrapper .login-wrapper .fields button {
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #eeeeee;
   border-radius: 1rem;
   border: none;
@@ -126,7 +127,8 @@ html, body {
   padding: 1rem;
   gap: 1rem;
   margin-bottom: 1rem;
-  width: 15rem;
+  width: 12rem;
+  padding: 0.5rem !important;
 }
 .sharwicom-wrapper .login-wrapper .fields .captcha-panel * {
   margin: 0;
@@ -170,14 +172,64 @@ html, body {
   justify-content: center;
   align-items: center;
 }
-.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .available-conversations, .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation {
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .search-conversations {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .search-conversations .search-input {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .search-conversations .search-input input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  background-color: #ffffff;
+  outline: #eeeeee solid 2px !important;
+  border-radius: 1rem;
+  border: none;
+  color: #444444;
+  transition: all 0.2s ease-in-out;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .search-conversations .search-input input:hover {
+  outline: #bbbbbb solid 2px !important;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .search-conversations .search-input button {
+  flex-shrink: 1;
+  padding: 0.5rem;
+  background-color: #eeeeee;
+  border-radius: 1rem;
+  border: none;
+  color: #444444;
+  font-weight: 900;
+  transition: all 0.2s ease-in-out;
+  outline: #eeeeee solid 2px !important;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .search-conversations .search-input button:not(:disabled):hover {
+  outline: #bbbbbb solid 2px !important;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .search-conversations .search-input button:disabled {
+  background-color: #ffffff;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .search-conversations .search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .available-conversations, .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation, .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .search-conversations {
   border: solid #eeeeee 2px;
   border-radius: 1rem;
   padding: 1rem;
-  height: 60%;
+  height: 80%;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .available-conversations {
   width: 20%;
+}
+.sharwicom-wrapper .home-wrapper .body .conversations-wrapper .title {
+  font-weight: 900;
+  margin-bottom: 1rem;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation {
   display: flex;
@@ -233,7 +285,7 @@ html, body {
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .create .message {
   flex-grow: 1;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #ffffff;
   outline: #eeeeee solid 2px !important;
   border-radius: 1rem;
@@ -245,7 +297,7 @@ html, body {
   outline: #bbbbbb solid 2px !important;
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper .active-conversation .create .send-message {
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #eeeeee;
   border-radius: 1rem;
   border: none;
@@ -368,7 +420,7 @@ html, body {
   justify-content: center;
 }
 .sharwicom-wrapper .home-wrapper .body .content-wrapper .right .buttons button {
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #eeeeee;
   border-radius: 1rem;
   border: none;
@@ -435,7 +487,7 @@ html, body {
   flex-direction: column;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form input, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form input {
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #ffffff;
   outline: #eeeeee solid 2px !important;
   border-radius: 1rem;
@@ -449,7 +501,7 @@ html, body {
   outline: #bbbbbb solid 2px !important;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form textarea, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form textarea {
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #ffffff;
   outline: #eeeeee solid 2px !important;
   border-radius: 1rem;
@@ -464,7 +516,7 @@ html, body {
   outline: #bbbbbb solid 2px !important;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form button, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form button {
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #eeeeee;
   border-radius: 1rem;
   border: none;
@@ -484,7 +536,7 @@ html, body {
   background-color: #ffffff;
 }
 .sharwicom-wrapper .home-wrapper .body .content-creator-wrapper .create-frame form select, .sharwicom-wrapper .home-wrapper .body .review-creator-wrapper .create-frame form select {
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #ffffff;
   outline: #eeeeee solid 2px !important;
   border-radius: 1rem;

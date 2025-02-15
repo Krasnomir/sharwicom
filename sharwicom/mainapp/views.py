@@ -9,6 +9,7 @@ from .validation import validate_register, validate_message, validate_content, v
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, RegisterForm, ContentForm, ReviewForm
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return redirect('home')
@@ -19,6 +20,7 @@ def home(request):
 
     return HttpResponse(template.render(context, request))
 
+@login_required
 def conversations(request):
     # gets all conversations where the requesting user is participating
     user_conversations = Conversation.objects.filter(Q(person1=request.user) | Q(person2=request.user))
@@ -29,6 +31,7 @@ def conversations(request):
     return HttpResponse(template.render(context, request))
 
 # loads a conversation page with a user specified by their username
+@login_required
 def conversation(request, recipient_name):
 
     # user sends a message
@@ -128,6 +131,19 @@ def register(request):
 
     return render(request, 'mainapp/register.html', {'form': form})
 
+# view for handling AJAX requests
+def search_conversations(request):
+    if request.method == 'GET':
+        search_query = request.GET.get('query', '')
+
+        search_results = User.objects.filter(username__contains=search_query)
+
+        search_results_dict = [
+            {"id": user.id, "username": user.username} for user in search_results
+        ]
+
+        return JsonResponse({'search_results': search_results_dict})
+
 
 # view for handling AJAX requests
 def sync_conversation(request):
@@ -168,6 +184,7 @@ def send_conversation(request):
 
         return HttpResponse("")
 
+# returns the average of all the ratings of a specified content
 def get_community_rating(content):
     community_rating = 0
 
@@ -181,10 +198,15 @@ def get_community_rating(content):
 
 def content(request, content_url_name):
     template = loader.get_template('mainapp/content.html')
+    context = {}
 
     try: content = Content.objects.get(url_name=content_url_name)
     except: return HttpResponse(template.render({'success': False, 'message': "Content specified in the URL does not exist!"}, request))
     
+    is_authenticated = True
+    if not request.user.is_authenticated:
+        is_authenticated = False
+
     user_rating = content.get_user_rating(request.user)
     community_rating = get_community_rating(content)
     
@@ -203,7 +225,8 @@ def content(request, content_url_name):
         'user_rating': user_rating,
         'community_rating': community_rating,
         'reviews': Review.objects.filter(content=content),
-        'has_review': has_review
+        'has_review': has_review,
+        'is_authenticated': is_authenticated
     }
 
     return HttpResponse(template.render(context, request))
@@ -211,6 +234,10 @@ def content(request, content_url_name):
 # view for handling AJAX requests
 def rate_content(request):
     if request.method == 'POST':
+
+        if not request.user.is_authenticated:
+            return JsonResponse({"success": False})
+        
         data = json.loads(request.body)
 
         url_name = data.get('content_url_name')
@@ -235,6 +262,7 @@ def rate_content(request):
 
     return HttpResponse('')
 
+@login_required
 def add_content(request):
     if request.method == 'POST': 
         form = ContentForm(request.POST) # create a form object and fill it with data from POST request
@@ -269,6 +297,7 @@ def add_content(request):
 
     return render(request, 'mainapp/add-content.html', {'form': form})
 
+@login_required
 def add_review(request, content_url_name):
     template = loader.get_template('mainapp/add-review.html')
 
@@ -313,6 +342,7 @@ def add_review(request, content_url_name):
 
     return render(request, 'mainapp/add-review.html', context)
 
+@login_required
 def edit_review(request, content_url_name):
     template = loader.get_template('mainapp/add-review.html')
 
