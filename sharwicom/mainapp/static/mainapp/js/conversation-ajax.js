@@ -19,8 +19,6 @@ function getCookie(name) {
 
 // dynamically load messages from the server wihtout refreshing the whole page
 function syncMessages() {
-    const csrftoken = getCookie('csrftoken');
-
     // retrieve usernames of people in the conversation from conversation div's data attributes 
     // checks will be performed on the server side to make sure user won't access conversations which they aren't a part of
     // without those checks they could easily access any existing conversations by changing the data attributes
@@ -32,7 +30,6 @@ function syncMessages() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', `../conversations/sync?user1=${user}&user2=${recipient}`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('X-CSRFToken', csrftoken);
     xhr.send();
 
     // recieving server response (that contains an array of messages if server accepts the request)

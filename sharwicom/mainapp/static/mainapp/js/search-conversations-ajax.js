@@ -17,21 +17,54 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function getSearchResults(searchQuery, callback) {
-    const csrftoken = getCookie('csrftoken');
+// sends a get request to the server
+// if there is no conversation object between the requesting user, the server is going to create one
+// if not it's just going to redirect the user to the existing conversation page
+function conversationRequest(username) {
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `../conversations/search?query=${searchQuery}`, true);
+    xhr.open('GET', `../conversations/request?username=${username}`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('X-CSRFToken', csrftoken);
     xhr.send();
 
     xhr.addEventListener('load', () => {
-        const response = JSON.parse(xhr.responseText);
+        const parsedJSONResponse = JSON.parse(xhr.responseText);
 
-        console.log(response.search_results);
+        if(parsedJSONResponse.success) {
+            location.href = '../conversation/' + username;
+        }
+    });
+}
 
-        callback(response.search_results);
+// displays the search results inside the first found div that has a search-results class
+// adds an event listener for each added div that calls conversationRequest function upon clicking it with the username assosiated with that div
+function displaySearchResults(usersDict) {
+    const searchResultsDiv = document.querySelector('.sharwicom-wrapper .search-results');
+    searchResultsDiv.innerHTML = '';
+
+    for(const user of usersDict) {
+        const searchResultDiv = document.createElement('div');
+        searchResultDiv.className = 'search-result';
+        searchResultDiv.innerHTML = user.username;
+        searchResultsDiv.appendChild(searchResultDiv);
+
+        searchResultDiv.addEventListener('click', () => {
+            conversationRequest(user.username)
+        });
+    }
+}
+
+function getSearchResults(searchQuery, callback) {
+    // create a xml http GET request with the search query in url query string
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `../conversations/search?query=${searchQuery}`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send();
+
+    xhr.addEventListener('load', () => {
+        const parsedJSONResponse = JSON.parse(xhr.responseText);
+
+        displaySearchResults(parsedJSONResponse.search_results);
     });
 }
 
@@ -40,8 +73,6 @@ addEventListener('load', () => {
     const searchQuery = document.getElementById('search-query');
 
     searchButton.addEventListener('click', (event) => {
-        getSearchResults(searchQuery.value, (results) => {
-            console.log(results);
-        });
+        getSearchResults(searchQuery.value);
     })
 });

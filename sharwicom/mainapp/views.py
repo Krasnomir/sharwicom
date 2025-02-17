@@ -138,8 +138,9 @@ def search_conversations(request):
 
         search_results = User.objects.filter(username__contains=search_query)
 
+        # return users whose usernames match the query, in form of a JSON dictionary
         search_results_dict = [
-            {"id": user.id, "username": user.username} for user in search_results
+            {"username": user.username} for user in search_results
         ]
 
         return JsonResponse({'search_results': search_results_dict})
@@ -183,6 +184,25 @@ def send_conversation(request):
             return HttpResponse("")
 
         return HttpResponse("")
+
+# view for handling AJAX requests
+def request_conversation(request):
+    if request.method == 'GET':
+        username = request.GET.get('username', '')
+        recipient = User.objects.filter(username=username).first()
+        if not recipient: # if a user with username specified in the request does not exist
+            return JsonResponse({'success': 'false'})
+
+        conversation = Conversation.objects.filter((Q(person1=request.user) & Q(person2=recipient)) | Q(person1=recipient) & Q(person2=request.user)).first() 
+
+        if not conversation: # if there is no such existing conversation object create one
+            newConversation = Conversation()
+            newConversation.person1 = request.user
+            newConversation.person2 = recipient
+            newConversation.save()
+            return JsonResponse({'success': 'true', 'createdConversation': 'true'})
+        else:
+            return JsonResponse({'success': 'true', 'createdConversation': 'false'})
 
 # returns the average of all the ratings of a specified content
 def get_community_rating(content):
