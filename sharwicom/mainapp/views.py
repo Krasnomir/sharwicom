@@ -20,10 +20,25 @@ def home(request):
 
     return HttpResponse(template.render(context, request))
 
+# this function is responsible for removing empty conversations where a user (passed as a parameter) is participating
+# returns a cleaned conversation array
+def get_non_empty_conversations(user):
+    # gets all conversations where the requesting user is participating including the empty ones
+    conversations = Conversation.objects.filter(Q(person1=user) | Q(person2=user))
+    non_empty_conversations = []
+
+    for conversation in conversations:
+        # tries to get at least one message object that is linked to the conversation
+        message = Message.objects.filter(conversation=conversation).first()
+        if message: # if no mesage was found
+           non_empty_conversations.append(conversation)
+    
+    # return conversations, now without the empty ones
+    return non_empty_conversations
+
 @login_required
 def conversations(request):
-    # gets all conversations where the requesting user is participating
-    user_conversations = Conversation.objects.filter(Q(person1=request.user) | Q(person2=request.user))
+    user_conversations = get_non_empty_conversations(request.user)
 
     template = loader.get_template('mainapp/conversations.html')
     context = {'convs':user_conversations}
@@ -65,7 +80,7 @@ def conversation(request, recipient_name):
 
     # gets all conversations where the requesting user is participating
     # this is just to display all the active conversations in the left pane
-    user_conversations = Conversation.objects.filter(Q(person1=request.user) | Q(person2=request.user))
+    user_conversations = get_non_empty_conversations(request.user)
 
     context = {
         'success': True,

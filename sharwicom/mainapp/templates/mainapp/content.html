@@ -58,7 +58,7 @@
                                 {% if review.author == request.user %}
                                     You
                                 {% else %}
-                                    {{review.author.username}}
+                                    <a href="{% url 'conversation' review.author %}">{{review.author.username}}</a>
                                 {% endif %} 
                             </span>
                             <div class="rating review-rating" data-rating="{{review.rating}}">
