@@ -15,7 +15,7 @@ def index(request):
     return redirect('home')
 
 def home(request):
-    template = loader.get_template('mainapp/home-base.html')
+    template = loader.get_template('mainapp/home.html')
     context = {}
 
     return HttpResponse(template.render(context, request))

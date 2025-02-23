@@ -32,5 +32,5 @@ class ContentForm(forms.Form):
 
 class ReviewForm(forms.Form):
     summary = forms.CharField(max_length=50, label="Review summary")
-    description = forms.CharField(widget=forms.Textarea, label="Review description")
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 5}), label="Review description")
     captcha = CaptchaField()

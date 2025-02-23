@@ -8,7 +8,13 @@
 <script defer src="{% static 'mainapp/js/auto-scroll-conversation.js' %}"></script>
 {% if success %}
 <div class="conversations-wrapper">
-    <div class="available-conversations">
+    <div class="info">
+        Conversation with {{ recipient_name }}
+    </div>
+    <div class="available-conversations hidable"> <!-- hidden when user is using a mobile device -->
+    <div class="title">
+        Available conversations:
+    </div>
     {% for conv in convs %}
         <div class="available-conversation">
         <!-- List of all available conversations, it displays the usernames of the people with which the requesting user is conversating -->

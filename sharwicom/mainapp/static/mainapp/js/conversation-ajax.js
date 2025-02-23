@@ -102,5 +102,5 @@ onload = () => {
     const sendBtn = document.querySelector('.sharwicom-wrapper .send-message');
     sendBtn.addEventListener('click', sendMessage);
 
-    setInterval(syncMessages, 1000); // updates the messages every x milliseconds 
+    //setInterval(syncMessages, 1000); // updates the messages every x milliseconds 
 }
