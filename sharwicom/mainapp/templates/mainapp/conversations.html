@@ -3,7 +3,7 @@
 
 {% load static %}
 
-<script src="{% static 'mainapp/js/search-conversations-ajax.js' %}"></script>
+<script src="{% static 'mainapp/js/search-ajax.js' %}"></script>
 
 <div class="conversations-wrapper">
     <div class="available-conversations">
@@ -20,10 +20,10 @@
         </div>
     {% endfor %}
     </div>
-    <div class="search-conversations">
+    <div class="search-conversations" data-type="conversations">
         <div class ="search-input">
-            <input type="text" placeholder="Search people" id="search-query">
-            <button id="search-button">🔎</button>
+            <input type="text" placeholder="Search people" class="search-query">
+            <button class="search-button">🔎</button>
         </div>
         <div class="search-results">
             

@@ -18,6 +18,15 @@ def home(request):
     template = loader.get_template('mainapp/home.html')
     context = {}
 
+    user_conversations = get_non_empty_conversations(request.user)
+    newest_contents = Content.objects.filter();
+
+    template = loader.get_template('mainapp/home.html')
+    context = {
+        'convs':user_conversations,
+        'contents':newest_contents
+    }
+
     return HttpResponse(template.render(context, request))
 
 # this function is responsible for removing empty conversations where a user (passed as a parameter) is participating
@@ -147,18 +156,30 @@ def register(request):
     return render(request, 'mainapp/register.html', {'form': form})
 
 # view for handling AJAX requests
-def search_conversations(request):
+def search(request):
     if request.method == 'GET':
-        search_query = request.GET.get('query', '')
+        search_query = request.GET.get('query')
+        search_type = request.GET.get('type') # either "content" or "conversations" (for now)
 
-        search_results = User.objects.filter(username__contains=search_query)
+        if(search_type == 'content'):
+            search_results = Content.objects.filter(title__contains=search_query)
 
-        # return users whose usernames match the query, in form of a JSON dictionary
-        search_results_dict = [
-            {"username": user.username} for user in search_results
-        ]
+            # return users whose usernames match the query, in form of a JSON dictionary
+            search_results_dict = [
+                {"title": content.title, "type": content.type, "author": content.author, "url_name": content.url_name} for content in search_results
+            ]
 
-        return JsonResponse({'search_results': search_results_dict})
+            return JsonResponse({'search_results': search_results_dict})
+        
+        elif(search_type == 'conversations'):
+            search_results = User.objects.filter(username__contains=search_query)
+
+            # return content that has a searched query in it's title
+            search_results_dict = [
+                {"username": user.username} for user in search_results
+            ]
+
+            return JsonResponse({'search_results': search_results_dict})
 
 
 # view for handling AJAX requests

@@ -8,7 +8,7 @@ urlpatterns = [
 
     path('conversations/', views.conversations, name='conversations'),
     path('conversations/sync', views.sync_conversation, name='sync_conversation'), # only handles AJAX requests
-    path('conversations/search', views.search_conversations, name='search_conversations'), # only handles AJAX requests
+    path('conversations/search', views.search, name='search'), # only handles AJAX requests
     path('conversations/send', views.send_conversation, name='send_conversation'), # only handles AJAX requests
     path('conversations/request', views.request_conversation, name='request_conversation'), # only handles AJAX requests
     path('conversation/<str:recipient_name>', views.conversation, name='conversation'),

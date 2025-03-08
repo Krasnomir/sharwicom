@@ -1,7 +1,12 @@
 textarea = document.querySelector("textarea");
-textarea.addEventListener('input', autoResize, false);
+textarea.addEventListener('input', () => {autoResize(textarea)}, false);
 
-function autoResize() {
-    this.style.height = 'auto';
-    this.style.height = this.scrollHeight + 'px';
+window.addEventListener('load', () => {
+    autoResize(textarea);
+});
+
+function autoResize(htmlTextarea) {
+    console.log(htmlTextarea.scrollHeight);
+    htmlTextarea.style.height = 'auto';
+    htmlTextarea.style.height = htmlTextarea.scrollHeight + 'px';
 }
