@@ -318,21 +318,24 @@ html, body {
                     
                     .available-conversations {
                         width: 100%;
-
-                        .title {
-                            margin-bottom: 1rem;
-                        }
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5rem;
                     }
                 }
 
                 @media only screen and (max-width: $tabletBreakPoint) {
-                    flex-direction: column;
+                    display: block;
                     overflow: auto;
                     
                     .contents, .conversations-section {
                         width: 100%;
                         height: 100%;
                         flex-grow: 1;
+                    }
+
+                    .conversations-section {
+                        margin-top: 1rem;
                     }
                 }
             }

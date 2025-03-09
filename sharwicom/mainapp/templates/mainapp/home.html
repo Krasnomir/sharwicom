@@ -8,18 +8,6 @@
 
 <div class="homepage-wrapper">
     <div class="contents">
-        <div class="newest-content">
-            <div class="title">
-                Newest added content:
-            </div>
-            {% for content in contents %}
-            <div class="details">
-                <div class="title">{{content.title}}</div>
-                <div>{{content.type}}</div>
-                <div>by {{content.author}}</div>
-            </div>
-            {% endfor %}
-        </div>
         <div class="search-content" data-type="content">
             <div class ="search-input">
                 <input type="text" placeholder="Search content" class="search-query">
@@ -29,7 +17,22 @@
                 
             </div>
         </div>
+        <div class="newest-content">
+            <div class="title">
+                Newest added content:
+            </div>
+            {% for content in contents %}
+            <a href="../content/{{content.url_name}}">
+                <div class="details">
+                    <div class="title">{{content.title}}</div>
+                    <div>{{content.type}}</div>
+                    <div>by {{content.author}}</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
     </div>
+    {% if request.user.is_authenticated %}
     <div class="conversations-section">
         <div class="available-conversations">
             <div class="title">
@@ -55,6 +58,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 {% endblock %}

@@ -322,19 +322,22 @@ html, body {
 }
 .sharwicom-wrapper .home-wrapper .body .homepage-wrapper .conversations-section .available-conversations {
   width: 100%;
-}
-.sharwicom-wrapper .home-wrapper .body .homepage-wrapper .conversations-section .available-conversations .title {
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 @media only screen and (max-width: 768px) {
   .sharwicom-wrapper .home-wrapper .body .homepage-wrapper {
-    flex-direction: column;
+    display: block;
     overflow: auto;
   }
   .sharwicom-wrapper .home-wrapper .body .homepage-wrapper .contents, .sharwicom-wrapper .home-wrapper .body .homepage-wrapper .conversations-section {
     width: 100%;
     height: 100%;
     flex-grow: 1;
+  }
+  .sharwicom-wrapper .home-wrapper .body .homepage-wrapper .conversations-section {
+    margin-top: 1rem;
   }
 }
 .sharwicom-wrapper .home-wrapper .body .conversations-wrapper {

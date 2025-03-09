@@ -18,13 +18,16 @@ def home(request):
     template = loader.get_template('mainapp/home.html')
     context = {}
 
-    user_conversations = get_non_empty_conversations(request.user)
-    newest_contents = Content.objects.filter();
+    user_conversations = None
+    if request.user.is_authenticated:
+        user_conversations = get_non_empty_conversations(request.user)
+
+    newest_content = Content.objects.filter();
 
     template = loader.get_template('mainapp/home.html')
     context = {
         'convs':user_conversations,
-        'contents':newest_contents
+        'contents':newest_content
     }
 
     return HttpResponse(template.render(context, request))
