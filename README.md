@@ -33,3 +33,11 @@ The app will run on the port 8000, type in localhost:8000 in your browser search
 - AJAX requests
 - Search bars
 - Content reviews and ratings
+- Page styling is written in SCSS
+
+## scss
+If you wish to modify SCSS files and to compile them to CSS automatically when you modify the file you will have to go to sharwicom/mainapp/static/mainapp/scss and run:
+You have to have [SCSS installed](https://sass-lang.com/install/)
+```
+sass --watch filename.scss ../css/filename.css
+```
