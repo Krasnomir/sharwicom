@@ -33,31 +33,31 @@
         </div>
     </div>
     {% if request.user.is_authenticated %}
-    <div class="conversations-section">
-        <div class="available-conversations">
-            <div class="title">
-                Available conversations:
-            </div>
-            {% for conv in convs %}
-                <div class="available-conversation">
-                {% if conv.person1 == request.user %}
-                    <a href="{% url 'conversation' conv.person2.username %}">{{ conv.person2.username }}</a>
-                {% else %}
-                    <a href="{% url 'conversation' conv.person1.username %}">{{ conv.person1.username }}</a>
-                {% endif %}
+        <div class="conversations-section">
+            <div class="available-conversations">
+                <div class="title">
+                    Available conversations:
                 </div>
-            {% endfor %}
-        </div>
-        <div class="search-conversations" data-type="conversations">
-            <div class ="search-input">
-                <input type="text" placeholder="Search people" class="search-query">
-                <button class="search-button">🔎</button>
+                {% for conv in convs %}
+                    <div class="available-conversation">
+                    {% if conv.person1 == request.user %}
+                        <a href="{% url 'conversation' conv.person2.username %}">{{ conv.person2.username }}</a>
+                    {% else %}
+                        <a href="{% url 'conversation' conv.person1.username %}">{{ conv.person1.username }}</a>
+                    {% endif %}
+                    </div>
+                {% endfor %}
             </div>
-            <div class="search-results">
-                
+            <div class="search-conversations" data-type="conversations">
+                <div class ="search-input">
+                    <input type="text" placeholder="Search people" class="search-query">
+                    <button class="search-button">🔎</button>
+                </div>
+                <div class="search-results">
+                    
+                </div>
             </div>
         </div>
-    </div>
     {% endif %}
 </div>
 
