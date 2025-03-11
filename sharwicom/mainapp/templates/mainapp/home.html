@@ -19,7 +19,7 @@
         </div>
         <div class="newest-content">
             <div class="title">
-                Newest added content:
+                Newest added content (<a href="../add-content">Click here to add new content</a>):
             </div>
             {% for content in contents %}
             <a href="../content/{{content.url_name}}">
@@ -58,6 +58,8 @@
                 </div>
             </div>
         </div>
+    {% else %}
+        <a href="../login">You need to be logged in, in order to conversate with people</a>
     {% endif %}
 </div>
 
